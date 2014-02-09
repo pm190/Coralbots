@@ -1,37 +1,20 @@
 package uk.ac.hw.pm190.coralbots;
 
+/**
+ * 
+ * @author Patrick Mackinder
+ */
 public class Cell
 {
-	private final int x, y, z;
+	private final Location location;
 
-	public Cell(int x, int y, int z)
+	public Cell(Location location)
 	{
-		this.x = x;
-		this.y = y;
-		this.z = z;
+		this.location = location;
 	}
 
-	/**
-	 * @return the x
-	 */
-	public int getX()
+	public Location getLocation()
 	{
-		return x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public int getY()
-	{
-		return y;
-	}
-
-	/**
-	 * @return the z
-	 */
-	public int getZ()
-	{
-		return z;
+		return location;
 	}
 }

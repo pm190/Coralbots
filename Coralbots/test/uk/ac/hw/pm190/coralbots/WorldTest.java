@@ -17,35 +17,25 @@ import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
+/**
+ * 
+ * @author Patrick Mackinder
+ */
 @RunWith(DataProviderRunner.class)
 public class WorldTest
 {
-	private static final int[] worldLengths = new int[] { 5, 10 };
+	private static final Location[] worldEnds = new Location[] { new Location(4, 4, 4), new Location(9, 9, 9), new Location(9, 4, 4), new Location(4, 9, 4), new Location(4, 4, 9) };
 
 	@DataProvider
 	public static Object[][] validCoordinates()
 	{
-		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldLengths.length);
-		for(int lengthX : worldLengths)
+		Collection<Object[]> data = new ArrayList<Object[]>();
+		for(Location worldEnd : worldEnds)
 		{
-			int minXIndex = 0;
-			int midXIndex = lengthX / 2;
-			int maxXIndex = lengthX - 1;
-			for(int lengthY : worldLengths)
-			{
-				int minYIndex = 0;
-				int midYIndex = lengthY / 2;
-				int maxYIndex = lengthY - 1;
-				for(int lengthZ : worldLengths)
-				{
-					int minZIndex = 0;
-					int midZIndex = lengthZ / 2;
-					int maxZIndex = lengthZ - 1;
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, minZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, midZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, maxZIndex });
-				}
-			}
+			Location middleLocation = Location.getMiddle(new Location(0, 0, 0), worldEnd);
+			data.add(new Location[] { worldEnd, new Location(0, 0, 0) });
+			data.add(new Location[] { worldEnd, middleLocation });
+			data.add(new Location[] { worldEnd, worldEnd });
 		}
 		return data.toArray(new Object[][] {});
 	}
@@ -53,27 +43,15 @@ public class WorldTest
 	@DataProvider
 	public static Object[][] invalidCoordinates()
 	{
-		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldLengths.length);
-		for(int lengthX : worldLengths)
+		Collection<Object[]> data = new ArrayList<Object[]>();
+		for(Location worldEnd : worldEnds)
 		{
-			int minXIndex = 0;
-			int maxXIndex = lengthX - 1;
-			for(int lengthY : worldLengths)
-			{
-				int minYIndex = 0;
-				int maxYIndex = lengthY - 1;
-				for(int lengthZ : worldLengths)
-				{
-					int minZIndex = 0;
-					int maxZIndex = lengthZ - 1;
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, minXIndex - 1, minYIndex, minZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex - 1, minZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, minZIndex - 1 });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, maxXIndex + 1, maxYIndex, maxZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex + 1, maxZIndex });
-					data.add(new Integer[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, maxZIndex + 1 });
-				}
-			}
+			data.add(new Location[] { worldEnd, new Location(-1, 0, 0) });
+			data.add(new Location[] { worldEnd, new Location(0, -1, 0) });
+			data.add(new Location[] { worldEnd, new Location(0, 0, -1) });
+			data.add(new Location[] { worldEnd, new Location(worldEnd.getX() + 1, 0, 0) });
+			data.add(new Location[] { worldEnd, new Location(0, worldEnd.getY() + 1, 0) });
+			data.add(new Location[] { worldEnd, new Location(0, 0, worldEnd.getZ() + 1) });
 		}
 		return data.toArray(new Object[][] {});
 	}
@@ -81,51 +59,37 @@ public class WorldTest
 	@DataProvider
 	public static Object[][] neighboursForValidCoordinates()
 	{
-		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldLengths.length);
-		for(int lengthX : worldLengths)
+		Collection<Object[]> data = new ArrayList<Object[]>();
+		for(Location worldEnd : worldEnds)
 		{
-			int minXIndex = 0;
-			int midXIndex = lengthX / 2;
-			int maxXIndex = lengthX - 1;
-			for(int lengthY : worldLengths)
-			{
-				int minYIndex = 0;
-				int midYIndex = lengthY / 2;
-				int maxYIndex = lengthY - 1;
-				for(int lengthZ : worldLengths)
-				{
-					int minZIndex = 0;
-					int midZIndex = lengthZ / 2;
-					int maxZIndex = lengthZ - 1;
-					// Cell not on any edge
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, midZIndex, 26 });
-					// Corner Cells
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, minZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, minYIndex, minZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, maxYIndex, minZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, minZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, maxZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, minYIndex, maxZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, maxYIndex, maxZIndex, 7 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, maxZIndex, 7 });
-					// Cell on 2 edges
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, minZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, minZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, minZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, minZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, maxZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, maxZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, maxZIndex, 11 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, maxZIndex, 11 });
-					// Cell on 1 edge
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, minZIndex, 17 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, midZIndex, 17 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, midZIndex, 17 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, midZIndex, 17 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, midZIndex, 17 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, maxZIndex, 17 });
-				}
-			}
+			Location middleLocation = Location.getMiddle(new Location(0, 0, 0), worldEnd);
+			// Cell not on any edge
+			data.add(new Object[] { worldEnd, middleLocation, 26 });
+			// Corner Cells
+			data.add(new Object[] { worldEnd, new Location(0, 0, 0), 7 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, 0), 7 });
+			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), 0), 7 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), 0), 7 });
+			data.add(new Object[] { worldEnd, new Location(0, 0, worldEnd.getZ()), 7 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, worldEnd.getZ()), 7 });
+			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), worldEnd.getZ()), 7 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), worldEnd.getZ()), 7 });
+			// Cell on 2 edges
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, 0), 11 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), 0), 11 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), 0), 11 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), 0), 11 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, worldEnd.getZ()), 11 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), worldEnd.getZ()), 11 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), worldEnd.getZ()), 11 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), worldEnd.getZ()), 11 });
+			// Cell on 1 edge
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), 0), 17 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, middleLocation.getZ()), 17 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), middleLocation.getZ()), 17 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), middleLocation.getZ()), 17 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), middleLocation.getZ()), 17 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), worldEnd.getZ()), 17 });
 		}
 		return data.toArray(new Object[][] {});
 	}
@@ -133,61 +97,47 @@ public class WorldTest
 	@DataProvider
 	public static Object[][] neighboursBelowForValidCoordinates()
 	{
-		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldLengths.length);
-		for(int lengthX : worldLengths)
+		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldEnds.length);
+		for(Location worldEnd : worldEnds)
 		{
-			int minXIndex = 0;
-			int midXIndex = lengthX / 2;
-			int maxXIndex = lengthX - 1;
-			for(int lengthY : worldLengths)
-			{
-				int minYIndex = 0;
-				int midYIndex = lengthY / 2;
-				int maxYIndex = lengthY - 1;
-				for(int lengthZ : worldLengths)
-				{
-					int minZIndex = 0;
-					int midZIndex = lengthZ / 2;
-					int maxZIndex = lengthZ - 1;
-					// Cell not on any edge
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, midZIndex, 9 });
-					// Corner Cells
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, minYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, maxYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, minYIndex, maxZIndex, 4 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, minYIndex, maxZIndex, 4 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, maxYIndex, maxZIndex, 4 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, maxYIndex, maxZIndex, 4 });
-					// Cell on 2 edges
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, maxZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, maxZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, maxZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, maxZIndex, 6 });
-					// Cell on 1 edge
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, minZIndex, 0 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, minYIndex, midZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, minXIndex, midYIndex, midZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, maxXIndex, midYIndex, midZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, maxYIndex, midZIndex, 6 });
-					data.add(new Object[] { lengthX, lengthY, lengthZ, midXIndex, midYIndex, maxZIndex, 9 });
-				}
-			}
+			Location middleLocation = Location.getMiddle(new Location(0, 0, 0), worldEnd);
+			// Cell not on any edge
+			data.add(new Object[] { worldEnd, middleLocation, 9 });
+			// Corner Cells
+			data.add(new Object[] { worldEnd, new Location(0, 0, 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(0, 0, worldEnd.getZ()), 4 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, worldEnd.getZ()), 4 });
+			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), worldEnd.getZ()), 4 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), worldEnd.getZ()), 4 });
+			// Cell on 2 edges
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, worldEnd.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), worldEnd.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), worldEnd.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), worldEnd.getZ()), 6 });
+			// Cell on 1 edge
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), 0), 0 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, middleLocation.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), middleLocation.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), middleLocation.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), middleLocation.getZ()), 6 });
+			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), worldEnd.getZ()), 9 });
 		}
 		return data.toArray(new Object[][] {});
 	}
 
 	@Test
 	@UseDataProvider("neighboursForValidCoordinates")
-	public void getNeighbours_validCoordinates_succeeds(int lengthX, int lengthY, int lengthZ, int x, int y, int z, int expectedNumberOfNeighbours)
+	public void getNeighbours_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
 	{
-		World w = new World(lengthX, lengthY, lengthZ);
-		Collection<Cell> neighbours = w.getNeighbours(x, y, z);
+		World w = new World(end);
+		Collection<Cell> neighbours = w.getNeighbours(cellLocation);
 		assertEquals("Number of neighbours", expectedNumberOfNeighbours, neighbours.size());
 
 		Set<Cell> neighboursSet = new HashSet<Cell>(neighbours.size());
@@ -196,20 +146,18 @@ public class WorldTest
 
 		for(Cell neighbour : neighbours)
 		{
-			assertTrue("X coordinate difference <= 1", Math.abs(neighbour.getX() - x) <= 1);
-			assertTrue("Y coordinate difference <= 1", Math.abs(neighbour.getY() - y) <= 1);
-			assertTrue("Z coordinate difference <= 1", Math.abs(neighbour.getZ() - z) <= 1);
+			assertTrue("XYZ coordinate difference <= 1", neighbour.getLocation().isNeighbour(cellLocation));
 		}
 
-		assertFalse("Not neighbour of itself", neighbours.contains(w.getCell(x, y, z)));
+		assertFalse("Not neighbour of itself", neighbours.contains(w.getCell(cellLocation)));
 	}
 
 	@Test
 	@UseDataProvider("neighboursBelowForValidCoordinates")
-	public void getNeighboursBelow_validCoordinates_succeeds(int lengthX, int lengthY, int lengthZ, int x, int y, int z, int expectedNumberOfNeighbours)
+	public void getNeighboursBelow_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
 	{
-		World w = new World(lengthX, lengthY, lengthZ);
-		Collection<Cell> neighbours = w.getNeighboursBelow(x, y, z);
+		World w = new World(end);
+		Collection<Cell> neighbours = w.getNeighboursBelow(cellLocation);
 		assertEquals("Number of neighbours", expectedNumberOfNeighbours, neighbours.size());
 
 		Set<Cell> neighboursSet = new HashSet<Cell>(neighbours.size());
@@ -218,36 +166,34 @@ public class WorldTest
 
 		for(Cell neighbour : neighbours)
 		{
-			assertTrue("X coordinate difference <= 1", Math.abs(neighbour.getX() - x) <= 1);
-			assertTrue("Y coordinate difference <= 1", Math.abs(neighbour.getY() - y) <= 1);
-			assertEquals("Z coordinate", z - 1, neighbour.getZ());
+			assertTrue("X coordinate difference <= 1", Math.abs(neighbour.getLocation().getX() - cellLocation.getX()) <= 1);
+			assertTrue("Y coordinate difference <= 1", Math.abs(neighbour.getLocation().getY() - cellLocation.getY()) <= 1);
+			assertEquals("Z coordinate", cellLocation.getZ() - 1, neighbour.getLocation().getZ());
 		}
 	}
 
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	@UseDataProvider("invalidCoordinates")
-	public void getNeighbours_invalidCoordinates_throwsException(int lengthX, int lengthY, int lengthZ, int x, int y, int z)
+	public void getNeighbours_invalidCoordinates_throwsException(Location end, Location cellLocation)
 	{
-		World w = new World(lengthX, lengthY, lengthZ);
-		w.getNeighbours(x, y, z);
+		World w = new World(end);
+		w.getNeighbours(cellLocation);
 	}
 
 	@Test
 	@UseDataProvider("validCoordinates")
-	public void getCell_validCoordinates_succeeds(int lengthX, int lengthY, int lengthZ, int x, int y, int z)
+	public void getCell_validCoordinates_succeeds(Location end, Location cellLocation)
 	{
-		World w = new World(lengthX, lengthY, lengthZ);
-		Cell c = w.getCell(x, y, z);
-		assertEquals("X coordinate", x, c.getX());
-		assertEquals("Y coordinate", y, c.getY());
-		assertEquals("Z coordinate", z, c.getZ());
+		World w = new World(end);
+		Cell c = w.getCell(cellLocation);
+		assertEquals("Cell coordinates", cellLocation, c.getLocation());
 	}
 
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	@UseDataProvider("invalidCoordinates")
-	public void getCell_invalidCoordinates_throwsException(int lengthX, int lengthY, int lengthZ, int x, int y, int z)
+	public void getCell_invalidCoordinates_throwsException(Location end, Location cellLocation)
 	{
-		World w = new World(lengthX, lengthY, lengthZ);
-		w.getCell(x, y, z);
+		World w = new World(end);
+		w.getCell(cellLocation);
 	}
 }
