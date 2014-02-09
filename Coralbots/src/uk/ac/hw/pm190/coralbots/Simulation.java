@@ -6,7 +6,7 @@ package uk.ac.hw.pm190.coralbots;
  */
 public class Simulation
 {
-	public Simulation(Location start, Location end)
+	public Simulation(Location end)
 	{
 		
 	}

@@ -14,8 +14,12 @@ public class World
 	private final int xLength, yLength, zLength;
 	private final Cell[][][] cells;
 
-	public World(Location end)
+	public World(Location end) throws IllegalArgumentException
 	{
+		if(end.getX() < 2 || end.getY() < 2 || end.getZ() < 2)
+		{
+			throw new IllegalArgumentException();
+		}
 		this.end = end;
 		this.xLength = end.getX()+1;
 		this.yLength = end.getY()+1;

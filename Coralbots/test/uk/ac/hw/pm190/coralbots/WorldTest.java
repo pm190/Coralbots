@@ -132,6 +132,18 @@ public class WorldTest
 		return data.toArray(new Object[][] {});
 	}
 
+	@DataProvider
+	public static Object[][] invalidWorldEndCooridnates()
+	{
+		Collection<Object> data = new ArrayList<Object>();
+		data.add(new Location[] { new Location(0, 0, 0) });
+		data.add(new Location[] { new Location(-1, -1, -1) });
+		data.add(new Location[] { new Location(2, 0, 2) });
+		data.add(new Location[] { new Location(0, 2, 2) });
+		data.add(new Location[] { new Location(2, 2, 0) });
+		return data.toArray(new Object[][] {});
+	}
+
 	@Test
 	@UseDataProvider("neighboursForValidCoordinates")
 	public void getNeighbours_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
@@ -195,5 +207,12 @@ public class WorldTest
 	{
 		World w = new World(end);
 		w.getCell(cellLocation);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	@UseDataProvider("invalidWorldEndCooridnates")
+	public void createWorld_invalidCoordinates_throwsException(Location end)
+	{
+		World w = new World(end);
 	}
 }
