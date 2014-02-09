@@ -71,6 +71,6 @@ public class Location
 
 	public static Location getMiddle(Location a, Location b)
 	{
-		return new Location((b.getX() - a.getX())/2, (b.getY() - a.getY())/2, (b.getZ() - a.getZ())/2);
+		return new Location(Math.abs((b.getX() - a.getX())/2), Math.abs((b.getY() - a.getY())/2), Math.abs((b.getZ() - a.getZ())/2));
 	}
 }

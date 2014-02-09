@@ -9,7 +9,7 @@ import java.util.Collection;
  */
 public class World
 {
-	//World start always 0,0,0
+	private final Location start = new Location(0,0,0);
 	private final Location end;
 	private final int xLength, yLength, zLength;
 	private final Cell[][][] cells;
