@@ -1,9 +1,9 @@
 package uk.ac.hw.pm190.coralbots;
 
-public class Cell 
+public class Cell
 {
-	private final int x,y,z;
-	
+	private final int x, y, z;
+
 	public Cell(int x, int y, int z)
 	{
 		this.x = x;
@@ -14,21 +14,24 @@ public class Cell
 	/**
 	 * @return the x
 	 */
-	public int getX() {
+	public int getX()
+	{
 		return x;
 	}
 
 	/**
 	 * @return the y
 	 */
-	public int getY() {
+	public int getY()
+	{
 		return y;
 	}
 
 	/**
 	 * @return the z
 	 */
-	public int getZ() {
+	public int getZ()
+	{
 		return z;
 	}
 }
