@@ -213,6 +213,7 @@ public class WorldTest
 	@UseDataProvider("invalidWorldEndCooridnates")
 	public void createWorld_invalidCoordinates_throwsException(Location end)
 	{
+		@SuppressWarnings("unused")
 		World w = new World(end);
 	}
 }
