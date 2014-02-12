@@ -2,6 +2,7 @@ package uk.ac.hw.pm190.coralbots;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * 
@@ -9,10 +10,10 @@ import java.util.Collection;
  */
 public class World
 {
-	private final Location start = new Location(0,0,0);
 	private final Location end;
 	private final int xLength, yLength, zLength;
 	private final Cell[][][] cells;
+	private List<Robot> robots;
 
 	public World(Location end) throws IllegalArgumentException
 	{
@@ -41,6 +42,30 @@ public class World
 	public Cell getCell(Location location) throws ArrayIndexOutOfBoundsException
 	{
 		return cells[location.getX()][location.getY()][location.getZ()];
+	}
+	
+	public void updateCell(Location location, CellContent content) throws ArrayIndexOutOfBoundsException
+	{
+		Cell cell = getCell(location);
+		cell.setContents(content);
+	}
+	
+	public void insertRobots(List<Robot> bots)
+	{
+		for(Robot robot : bots)
+		{
+			updateCell(robot.getLocation(), robot);
+			robots.add(robot);
+		}
+	}
+	
+	public void updateRobots()
+	{
+		for(Robot robot : robots)
+		{
+			updateCell(robot.getLocation(), new Water());
+			updateCell(robot.getNextLocation(end), robot);
+		}
 	}
 
 	public Collection<Cell> getNeighbours(Location location) throws ArrayIndexOutOfBoundsException

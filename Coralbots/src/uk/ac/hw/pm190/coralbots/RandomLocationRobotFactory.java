@@ -2,7 +2,6 @@ package uk.ac.hw.pm190.coralbots;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 
@@ -13,20 +12,16 @@ public class RandomLocationRobotFactory implements RobotFactory
 	@Override
 	public List<Robot> createRobots(int numberOfRobots, Location worldEnd)
 	{
-		int xLimit = worldEnd.getX();
-		int yLimit = worldEnd.getY();
-		int zLimit = worldEnd.getZ();
-
 		List<Robot> robots = new ArrayList<Robot>();
 		List<Location> locations = new ArrayList<Location>();
 		Location loc;
-		Random random = new Random();
+		//TODO infinite loop if too many robots
 		for(int i = 0; i < numberOfRobots; i++)
 		{
-			loc = new Location(random.nextInt(xLimit+1), random.nextInt(yLimit+1), random.nextInt(zLimit+1));
+			loc = Location.randomLocation(worldEnd);
 			while(locations.contains(loc))
 			{
-				loc = new Location(random.nextInt(xLimit+1), random.nextInt(yLimit+1), random.nextInt(zLimit+1));
+				loc = Location.randomLocation(worldEnd);
 			}
 			locations.add(loc);
 			robots.add(new Robot(loc));

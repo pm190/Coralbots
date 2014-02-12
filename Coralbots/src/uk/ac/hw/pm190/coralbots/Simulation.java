@@ -8,13 +8,18 @@ import java.util.List;
  */
 public class Simulation
 {
-	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory)
+	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles)
 	{
 		World world = new World(end);
 		List<Robot> robots = robotFactory.createRobots(numberOfRobots, end);
 		for(Robot robot : robots)
 		{
-			
+			world.updateCell(robot.getLocation(), robot);
+		}
+		
+		for(int i = 0; i < cycles; i++)
+		{
+			world.updateRobots();
 		}
 	}
 }
