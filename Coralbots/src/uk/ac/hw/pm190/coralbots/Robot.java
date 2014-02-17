@@ -22,10 +22,17 @@ public class Robot implements CellContent
 	{
 		this.location = location;
 	}
-
-	public Location getNextLocation(Location end)
+	
+	public void update(World world)
 	{
+		//MOVE
+		world.updateCell(location, new Water());
 		//TODO movement rules, for now just move randomly up to 3 cells away
-		return location.randomLocation(end, 3);
+		location = location.randomLocation(world.getEnd(), 3);
+		world.updateCell(location, this);
+		System.out.println(String.format("Robot location (%d, %d, %d)", location.getX(), location.getY(), location.getZ()));
+		
+		//ACT
+		
 	}
 }

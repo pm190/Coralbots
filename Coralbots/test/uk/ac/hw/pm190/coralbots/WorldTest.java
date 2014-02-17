@@ -3,8 +3,10 @@ package uk.ac.hw.pm190.coralbots;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.junit.Test;
@@ -215,5 +217,19 @@ public class WorldTest
 	{
 		@SuppressWarnings("unused")
 		World w = new World(end);
+	}
+	
+	@Test
+	public void insertRobots_validCoordinates_succeeds()
+	{
+		Location worldEnd = new Location(4,4,4);
+		World w = new World(worldEnd);
+		Location[] locations = new Location[] {new Location(1,1,1), new Location(2,2,2), new Location(1,3,4)};
+		List<Robot> robots = new DefiniteLocationRobotFactory(Arrays.asList(locations)).createRobots(locations.length, worldEnd);
+		w.insertRobots(robots);
+		for(Robot robot : robots)
+		{
+			assertEquals("Inserted Robot", w.getCell(robot.getLocation()).getContents(), robot);
+		}
 	}
 }

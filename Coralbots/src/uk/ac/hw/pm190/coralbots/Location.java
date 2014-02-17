@@ -78,13 +78,13 @@ public class Location
 	
 	public static Location randomLocation(Location end)
 	{
-		Random random = new Random();
+		Random random = new Random(System.currentTimeMillis());
 		return new Location(random.nextInt(end.getX()+1), random.nextInt(end.getY()+1), random.nextInt(end.getZ()+1));
 	}
 	
 	public Location randomLocation(Location end, int distance)
 	{
-		Random random = new Random();
+		Random random = new Random(System.currentTimeMillis());
 		int x = Math.max(0, Math.min(getX()+(random.nextInt((distance*2)-distance)), end.getX()));
 		int y = Math.max(0, Math.min(getY()+(random.nextInt((distance*2)-distance)), end.getY()));
 		int z = Math.max(0, Math.min(getZ()+(random.nextInt((distance*2)-distance)), end.getZ()));

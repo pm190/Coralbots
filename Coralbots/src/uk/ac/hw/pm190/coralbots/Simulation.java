@@ -8,18 +8,22 @@ import java.util.List;
  */
 public class Simulation
 {
+	private final World world;
+	
 	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles)
 	{
-		World world = new World(end);
+		world = new World(end);
 		List<Robot> robots = robotFactory.createRobots(numberOfRobots, end);
-		for(Robot robot : robots)
-		{
-			world.updateCell(robot.getLocation(), robot);
-		}
+		world.insertRobots(robots);
 		
 		for(int i = 0; i < cycles; i++)
 		{
 			world.updateRobots();
 		}
+	}
+
+	public World getWorld()
+	{
+		return world;
 	}
 }

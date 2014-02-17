@@ -66,7 +66,7 @@ public class LocationTest
 	}
 	
 	@DataProvider
-	public static Object[][] locations()
+	public static Object[][] middleLocations()
 	{
 		Collection<Object[]> data = new ArrayList<Object[]>();
 		data.add(new Location[] { new Location(0,0,0), new Location(4, 0, 0), new Location(2,0,0) });
@@ -82,6 +82,18 @@ public class LocationTest
 		data.add(new Location[] { new Location(0,0,0), new Location(5, 5, 5), new Location(2,2,2) });
 		data.add(new Location[] { new Location(0,0,0), new Location(7, 0, 7), new Location(3,0,3) });
 		data.add(new Location[] { new Location(0,0,0), new Location(0, 3, 0), new Location(0,1,0) });
+		return data.toArray(new Object[][] {});
+	}
+	
+	@DataProvider
+	public static Object[][] locationsAndDistances()
+	{
+		Collection<Object[]> data = new ArrayList<Object[]>();
+		data.add(new Object[] { new Location(4,4,4), new Location(2, 2, 2), 1 });
+		data.add(new Object[] { new Location(4,4,4), new Location(2, 2, 2), 2 });
+		data.add(new Object[] { new Location(4,4,4), new Location(2, 2, 2), 3 });
+		data.add(new Object[] { new Location(9,9,9), new Location(1, 1, 1), 1 });
+		data.add(new Object[] { new Location(4,4,4), new Location(4, 5, 6), 4 });
 		return data.toArray(new Object[][] {});
 	}
 
@@ -100,10 +112,20 @@ public class LocationTest
 	}
 
 	@Test
-	@UseDataProvider("locations")
+	@UseDataProvider("middleLocations")
 	public void getMiddle_succeeds(Location start, Location end, Location expectedMiddle)
 	{
 		Location middle = Location.getMiddle(start, end);
 		assertEquals("Middle location", middle, expectedMiddle);
+	}
+	
+	@Test
+	@UseDataProvider("locationsAndDistances")
+	public void getRandomLocationDistance_succeeds(Location worldEnd, Location location, int distance)
+	{
+		Location randomLocation = location.randomLocation(worldEnd, distance);
+		assertTrue("X cooridnate", Math.abs(randomLocation.getX()-distance) <= distance);
+		assertTrue("Y cooridnate", Math.abs(randomLocation.getY()-distance) <= distance);
+		assertTrue("Z cooridnate", Math.abs(randomLocation.getZ()-distance) <= distance);
 	}
 }

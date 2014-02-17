@@ -13,7 +13,7 @@ public class World
 	private final Location end;
 	private final int xLength, yLength, zLength;
 	private final Cell[][][] cells;
-	private List<Robot> robots;
+	private final List<Robot> robots = new ArrayList<Robot>();
 
 	public World(Location end) throws IllegalArgumentException
 	{
@@ -61,10 +61,10 @@ public class World
 	
 	public void updateRobots()
 	{
+		//Will do nothing if not used insertRobots
 		for(Robot robot : robots)
 		{
-			updateCell(robot.getLocation(), new Water());
-			updateCell(robot.getNextLocation(end), robot);
+			robot.update(this);
 		}
 	}
 
@@ -109,5 +109,15 @@ public class World
 			}
 		}
 		return neighbours;
+	}
+	
+	public Location getEnd()
+	{
+		return end;
+	}
+
+	public List<Robot> getRobots()
+	{
+		return robots;
 	}
 }
