@@ -29,13 +29,4 @@ public class Cell
 	{
 		this.contents = contents;
 	}
-	
-	public boolean isEmpty()
-	{
-		if(contents instanceof Water)
-		{
-			return true;
-		}
-		return false;
-	}
 }

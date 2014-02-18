@@ -73,21 +73,21 @@ public class Location
 
 	public static Location getMiddle(Location a, Location b)
 	{
-		return new Location(Math.abs((b.getX() - a.getX())/2), Math.abs((b.getY() - a.getY())/2), Math.abs((b.getZ() - a.getZ())/2));
+		return new Location(Math.abs((b.getX() - a.getX()) / 2), Math.abs((b.getY() - a.getY()) / 2), Math.abs((b.getZ() - a.getZ()) / 2));
 	}
-	
+
 	public static Location randomLocation(Location end)
 	{
-		Random random = new Random(System.currentTimeMillis());
-		return new Location(random.nextInt(end.getX()+1), random.nextInt(end.getY()+1), random.nextInt(end.getZ()+1));
+		Random random = new Random();
+		return new Location(random.nextInt(end.getX() + 1), random.nextInt(end.getY() + 1), random.nextInt(end.getZ() + 1));
 	}
-	
+
 	public Location randomLocation(Location end, int distance)
 	{
-		Random random = new Random(System.currentTimeMillis());
-		int x = Math.max(0, Math.min(getX()+(random.nextInt((distance*2)-distance)), end.getX()));
-		int y = Math.max(0, Math.min(getY()+(random.nextInt((distance*2)-distance)), end.getY()));
-		int z = Math.max(0, Math.min(getZ()+(random.nextInt((distance*2)-distance)), end.getZ()));
+		Random random = new Random();
+		int x = Math.max(0, Math.min(getX() + (random.nextInt(distance * 2) - distance), end.getX()));
+		int y = Math.max(0, Math.min(getY() + (random.nextInt(distance * 2) - distance), end.getY()));
+		int z = Math.max(0, Math.min(getZ() + (random.nextInt(distance * 2) - distance), end.getZ()));
 		return new Location(x, y, z);
 	}
 }

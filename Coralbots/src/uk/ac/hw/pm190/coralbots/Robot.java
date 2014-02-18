@@ -17,11 +17,6 @@ public class Robot implements CellContent
 	{
 		return location;
 	}
-
-	public void setLocation(Location location)
-	{
-		this.location = location;
-	}
 	
 	public void update(World world)
 	{
@@ -30,9 +25,14 @@ public class Robot implements CellContent
 		//TODO movement rules, for now just move randomly up to 3 cells away
 		location = location.randomLocation(world.getEnd(), 3);
 		world.updateCell(location, this);
-		System.out.println(String.format("Robot location (%d, %d, %d)", location.getX(), location.getY(), location.getZ()));
 		
 		//ACT
 		
+	}
+
+	@Override
+	public CellContentType getCellContentType()
+	{
+		return CellContentType.ROBOT;
 	}
 }

@@ -6,8 +6,9 @@ package uk.ac.hw.pm190.coralbots;
  */
 public class Water implements CellContent
 {
-	public Water()
+	@Override
+	public CellContentType getCellContentType()
 	{
-		
+		return CellContentType.CORAL;
 	}
 }
