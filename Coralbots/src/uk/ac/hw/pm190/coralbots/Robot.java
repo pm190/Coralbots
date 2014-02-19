@@ -7,10 +7,12 @@ package uk.ac.hw.pm190.coralbots;
 public class Robot implements CellContent
 {
 	private Location location;
+	private CellContent contents;
 
 	public Robot(Location location)
 	{
 		this.location = location;
+		contents = null;
 	}
 
 	public Location getLocation()
@@ -38,7 +40,10 @@ public class Robot implements CellContent
 		}
 		
 		//ACT
-		//TODO act code
+		if(contents == null)
+		{
+			//TODO match pattern/pickup content
+		}
 	}
 
 	@Override
