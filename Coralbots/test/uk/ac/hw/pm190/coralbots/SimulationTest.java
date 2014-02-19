@@ -13,7 +13,7 @@ import org.junit.Test;
 public class SimulationTest
 {
 	@Test
-	public void robotMoved()
+	public void robotMoved_succeeds() throws CellNotEmptyException
 	{
 		Location worldEnd = new Location(9,9,9);
 		Location robotLocation = new Location(1,1,1);
@@ -21,5 +21,15 @@ public class SimulationTest
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
 		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1);
 		assertFalse("Robot location changed", sim.getWorld().getRobots().get(0).getLocation().equals(robotLocation));
+	}
+	
+	@Test(expected = CellNotEmptyException.class)
+	public void insertRobots_sameLocation_fails() throws CellNotEmptyException
+	{
+		Location worldEnd = new Location(9,9,9);
+		Location[] locations = new Location[] { new Location(1,1,1), new Location(1,1,1) };
+		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
+		@SuppressWarnings("unused")
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1);
 	}
 }

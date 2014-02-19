@@ -18,13 +18,24 @@ public class Robot implements CellContent
 		return location;
 	}
 	
-	public void update(World world)
+	public void update(World world) throws ArrayIndexOutOfBoundsException
 	{
 		//MOVE
-		world.updateCell(location, new Water());
-		//TODO movement rules, for now just move randomly up to 3 cells away
-		location = location.randomLocation(world.getEnd(), 3);
-		world.updateCell(location, this);
+		boolean invalidPosition = true;
+		while(invalidPosition)
+		{
+			try
+			{
+				world.updateCell(location, new Water());
+				//TODO movement rules, for now just move randomly up to 3 cells away
+				location = location.randomLocation(world.getEnd(), 3);
+				world.updateCell(location, this);
+			}
+			catch(CellNotEmptyException e)
+			{
+				continue;
+			}
+		}
 		
 		//ACT
 		

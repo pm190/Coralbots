@@ -25,8 +25,13 @@ public class Cell
 		return contents;
 	}
 
-	public void setContents(CellContent contents)
+	public void setContents(CellContent content) throws CellNotEmptyException
 	{
-		this.contents = contents;
+		if(contents.getCellContentType() == CellContentType.WATER)
+		{
+			contents = content;
+			return;
+		}
+		throw new CellNotEmptyException();
 	}
 }

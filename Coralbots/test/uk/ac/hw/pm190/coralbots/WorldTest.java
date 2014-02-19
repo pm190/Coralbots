@@ -220,7 +220,7 @@ public class WorldTest
 	}
 	
 	@Test
-	public void insertRobots_validCoordinates_succeeds()
+	public void insertRobots_validCoordinates_succeeds() throws CellNotEmptyException
 	{
 		Location worldEnd = new Location(4,4,4);
 		World w = new World(worldEnd);

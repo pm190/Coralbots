@@ -44,13 +44,13 @@ public class World
 		return cells[location.getX()][location.getY()][location.getZ()];
 	}
 	
-	public void updateCell(Location location, CellContent content) throws ArrayIndexOutOfBoundsException
+	public void updateCell(Location location, CellContent content) throws ArrayIndexOutOfBoundsException, CellNotEmptyException
 	{
 		Cell cell = getCell(location);
 		cell.setContents(content);
 	}
 	
-	public void insertRobots(List<Robot> bots)
+	public void insertRobots(List<Robot> bots) throws CellNotEmptyException
 	{
 		for(Robot robot : bots)
 		{

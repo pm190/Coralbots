@@ -9,6 +9,6 @@ public class Water implements CellContent
 	@Override
 	public CellContentType getCellContentType()
 	{
-		return CellContentType.CORAL;
+		return CellContentType.WATER;
 	}
 }

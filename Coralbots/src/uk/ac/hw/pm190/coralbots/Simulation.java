@@ -10,7 +10,7 @@ public class Simulation
 {
 	private final World world;
 	
-	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles)
+	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles) throws CellNotEmptyException
 	{
 		world = new World(end);
 		List<Robot> robots = robotFactory.createRobots(numberOfRobots, end);
