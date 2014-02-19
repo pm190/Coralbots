@@ -1,7 +1,6 @@
 package uk.ac.hw.pm190.coralbots;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -68,45 +67,28 @@ public class World
 		}
 	}
 
-	public Collection<Cell> getNeighbours(Location location) throws ArrayIndexOutOfBoundsException
-	{
-		Collection<Cell> neighbours = new ArrayList<Cell>();
-		Cell c = this.getCell(location);
-		for(int z = Math.max(0, location.getZ() - 1); z <= Math.min(zLength - 1, location.getZ() + 1); z++)
-		{
-			for(int y = Math.max(0, location.getY() - 1); y <= Math.min(yLength - 1, location.getY() + 1); y++)
-			{
-				for(int x = Math.max(0, location.getX() - 1); x <= Math.min(xLength - 1, location.getX() + 1); x++)
-				{
-					Cell neighbour = this.getCell(new Location(x, y, z));
-					if(neighbour != c)
-					{
-						neighbours.add(neighbour);
-					}
-				}
-			}
-		}
-		return neighbours;
-	}
-
-	public Collection<Cell> getNeighboursBelow(Location location) throws ArrayIndexOutOfBoundsException
+	public Cell[][] getNeighboursBelow(Location location) throws ArrayIndexOutOfBoundsException
 	{
 		if(location.getZ() < 0)
 		{
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		Collection<Cell> neighbours = new ArrayList<Cell>();
+		Cell[][] neighbours = new Cell[3][3];
 		if(location.getZ() == 0)
 		{
 			return neighbours;
 		}
 		int z = location.getZ() - 1;
+		int i = 0, j = 0;
 		for(int y = Math.max(0, location.getY() - 1); y <= Math.min(yLength - 1, location.getY() + 1); y++)
 		{
+			i = 0;
 			for(int x = Math.max(0, location.getX() - 1); x <= Math.min(xLength - 1, location.getX() + 1); x++)
 			{
-				neighbours.add(this.getCell(new Location(x, y, z)));
+				neighbours[j][i] = this.getCell(new Location(x, y, z));
+				i++;
 			}
+			j++;
 		}
 		return neighbours;
 	}

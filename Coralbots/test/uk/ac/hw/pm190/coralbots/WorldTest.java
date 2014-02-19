@@ -59,44 +59,6 @@ public class WorldTest
 	}
 
 	@DataProvider
-	public static Object[][] neighboursForValidCoordinates()
-	{
-		Collection<Object[]> data = new ArrayList<Object[]>();
-		for(Location worldEnd : worldEnds)
-		{
-			Location middleLocation = Location.getMiddle(new Location(0, 0, 0), worldEnd);
-			// Cell not on any edge
-			data.add(new Object[] { worldEnd, middleLocation, 26 });
-			// Corner Cells
-			data.add(new Object[] { worldEnd, new Location(0, 0, 0), 7 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, 0), 7 });
-			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), 0), 7 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), 0), 7 });
-			data.add(new Object[] { worldEnd, new Location(0, 0, worldEnd.getZ()), 7 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), 0, worldEnd.getZ()), 7 });
-			data.add(new Object[] { worldEnd, new Location(0, worldEnd.getY(), worldEnd.getZ()), 7 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), worldEnd.getY(), worldEnd.getZ()), 7 });
-			// Cell on 2 edges
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, 0), 11 });
-			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), 0), 11 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), 0), 11 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), 0), 11 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, worldEnd.getZ()), 11 });
-			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), worldEnd.getZ()), 11 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), worldEnd.getZ()), 11 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), worldEnd.getZ()), 11 });
-			// Cell on 1 edge
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), 0), 17 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), 0, middleLocation.getZ()), 17 });
-			data.add(new Object[] { worldEnd, new Location(0, middleLocation.getY(), middleLocation.getZ()), 17 });
-			data.add(new Object[] { worldEnd, new Location(worldEnd.getX(), middleLocation.getY(), middleLocation.getZ()), 17 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), worldEnd.getY(), middleLocation.getZ()), 17 });
-			data.add(new Object[] { worldEnd, new Location(middleLocation.getX(), middleLocation.getY(), worldEnd.getZ()), 17 });
-		}
-		return data.toArray(new Object[][] {});
-	}
-
-	@DataProvider
 	public static Object[][] neighboursBelowForValidCoordinates()
 	{
 		Collection<Object[]> data = new ArrayList<Object[]>(3 * worldEnds.length);
@@ -147,51 +109,49 @@ public class WorldTest
 	}
 
 	@Test
-	@UseDataProvider("neighboursForValidCoordinates")
-	public void getNeighbours_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
-	{
-		World w = new World(end);
-		Collection<Cell> neighbours = w.getNeighbours(cellLocation);
-		assertEquals("Number of neighbours", expectedNumberOfNeighbours, neighbours.size());
-
-		Set<Cell> neighboursSet = new HashSet<Cell>(neighbours.size());
-		neighboursSet.addAll(neighbours);
-		assertEquals("Number of unique neighbours", expectedNumberOfNeighbours, neighboursSet.size());
-
-		for(Cell neighbour : neighbours)
-		{
-			assertTrue("XYZ coordinate difference <= 1", neighbour.getLocation().isNeighbour(cellLocation));
-		}
-
-		assertFalse("Not neighbour of itself", neighbours.contains(w.getCell(cellLocation)));
-	}
-
-	@Test
 	@UseDataProvider("neighboursBelowForValidCoordinates")
 	public void getNeighboursBelow_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
 	{
 		World w = new World(end);
-		Collection<Cell> neighbours = w.getNeighboursBelow(cellLocation);
-		assertEquals("Number of neighbours", expectedNumberOfNeighbours, neighbours.size());
+		Cell[][] neighbours = w.getNeighboursBelow(cellLocation);
+		int totalNeighbours = 0;
+		for(int y = 0; y < 3; y++)
+		{
+			for(int x = 0; x < 3; x++)
+			{
+				if(neighbours[y][x] != null)
+				{
+					totalNeighbours++;
+				}
+			}
+		}
+		assertEquals("Number of neighbours", expectedNumberOfNeighbours, totalNeighbours);
 
-		Set<Cell> neighboursSet = new HashSet<Cell>(neighbours.size());
-		neighboursSet.addAll(neighbours);
+		Set<Cell> neighboursSet = new HashSet<Cell>(9);
+		for(int y = 0; y < 3; y++)
+		{
+			for(int x = 0; x < 3; x++)
+			{
+				if(neighbours[y][x] != null)
+				{
+					neighboursSet.add(neighbours[y][x]);
+				}
+			}
+		}
 		assertEquals("Number of unique neighbours", expectedNumberOfNeighbours, neighboursSet.size());
 
-		for(Cell neighbour : neighbours)
+		for(int y = 0; y < 3; y++)
 		{
-			assertTrue("X coordinate difference <= 1", Math.abs(neighbour.getLocation().getX() - cellLocation.getX()) <= 1);
-			assertTrue("Y coordinate difference <= 1", Math.abs(neighbour.getLocation().getY() - cellLocation.getY()) <= 1);
-			assertEquals("Z coordinate", cellLocation.getZ() - 1, neighbour.getLocation().getZ());
+			for(int x = 0; x < 3; x++)
+			{
+				if(neighbours[y][x] != null)
+				{
+					assertTrue("X coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getX() - cellLocation.getX()) <= 1);
+					assertTrue("Y coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getY() - cellLocation.getY()) <= 1);
+					assertEquals("Z coordinate", cellLocation.getZ() - 1, neighbours[y][x].getLocation().getZ());
+				}
+			}
 		}
-	}
-
-	@Test(expected = ArrayIndexOutOfBoundsException.class)
-	@UseDataProvider("invalidCoordinates")
-	public void getNeighbours_invalidCoordinates_throwsException(Location end, Location cellLocation)
-	{
-		World w = new World(end);
-		w.getNeighbours(cellLocation);
 	}
 
 	@Test
@@ -218,13 +178,13 @@ public class WorldTest
 		@SuppressWarnings("unused")
 		World w = new World(end);
 	}
-	
+
 	@Test
 	public void insertRobots_validCoordinates_succeeds() throws CellNotEmptyException
 	{
-		Location worldEnd = new Location(4,4,4);
+		Location worldEnd = new Location(4, 4, 4);
 		World w = new World(worldEnd);
-		Location[] locations = new Location[] {new Location(1,1,1), new Location(2,2,2), new Location(1,3,4)};
+		Location[] locations = new Location[] { new Location(1, 1, 1), new Location(2, 2, 2), new Location(1, 3, 4) };
 		List<Robot> robots = new DefiniteLocationRobotFactory(Arrays.asList(locations)).createRobots(locations.length, worldEnd);
 		w.insertRobots(robots);
 		for(Robot robot : robots)
