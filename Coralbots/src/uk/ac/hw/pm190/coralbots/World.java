@@ -66,7 +66,7 @@ public class World
 			robot.update(this);
 		}
 	}
-
+	
 	public Cell[][] getNeighboursBelow(Location location) throws ArrayIndexOutOfBoundsException
 	{
 		if(location.getZ() < 0)

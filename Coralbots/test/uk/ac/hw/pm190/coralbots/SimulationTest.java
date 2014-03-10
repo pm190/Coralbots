@@ -20,6 +20,7 @@ public class SimulationTest
 		Location[] locations = new Location[] { robotLocation };
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
 		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1);
+		sim.run();
 		assertFalse("Robot location changed", sim.getWorld().getRobots().get(0).getLocation().equals(robotLocation));
 	}
 	

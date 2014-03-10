@@ -23,19 +23,22 @@ public class Robot implements CellContent
 	public void update(World world) throws ArrayIndexOutOfBoundsException
 	{
 		//MOVE
-		boolean invalidPosition = true;
-		while(invalidPosition)
+		int attempts = 0;
+		while(attempts < 5)
 		{
 			try
 			{
-				world.updateCell(location, new Water());
+				Location old = location;
 				//TODO movement rules, for now just move randomly up to 3 cells away
 				location = location.randomLocation(world.getEnd(), 3);
+				//location = new Location(location.getX()+1, location.getY()+1, location.getZ()+1);
 				world.updateCell(location, this);
+				world.getCell(old).departRobot();
+				world.getCell(location).incrementVisitedCount();
 			}
-			catch(CellNotEmptyException e)
+			catch(CellNotEmptyException | ArrayIndexOutOfBoundsException e)
 			{
-				continue;
+				attempts++;
 			}
 		}
 		
@@ -43,6 +46,10 @@ public class Robot implements CellContent
 		if(contents == null)
 		{
 			//TODO match pattern/pickup content
+		}
+		else
+		{
+			
 		}
 	}
 

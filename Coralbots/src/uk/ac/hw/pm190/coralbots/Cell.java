@@ -8,6 +8,7 @@ public class Cell
 {
 	private final Location location;
 	private CellContent contents;
+	private int visitedCount;
 
 	public Cell(Location location)
 	{
@@ -33,5 +34,23 @@ public class Cell
 			return;
 		}
 		throw new CellNotEmptyException();
+	}
+	
+	public void departRobot()
+	{
+		if(contents.getCellContentType() == CellContentType.ROBOT)
+		{
+			contents = new Water();
+		}
+	}
+
+	public int getVisitedCount()
+	{
+		return visitedCount;
+	}
+	
+	public void incrementVisitedCount()
+	{
+		visitedCount++;
 	}
 }
