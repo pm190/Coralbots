@@ -1,10 +1,11 @@
-package uk.ac.hw.pm190.graphics;
+package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
-import uk.ac.hw.pm190.coralbots.Location;
-import uk.ac.hw.pm190.coralbots.World;
+
+import uk.ac.hw.pm190.coralbots.simulation.Location;
+import uk.ac.hw.pm190.coralbots.simulation.World;
 
 public class WorldImage extends Canvas
 {

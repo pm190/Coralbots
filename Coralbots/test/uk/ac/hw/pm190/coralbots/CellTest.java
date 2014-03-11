@@ -6,6 +6,13 @@ import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import uk.ac.hw.pm190.coralbots.simulation.Cell;
+import uk.ac.hw.pm190.coralbots.simulation.CellContent;
+import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
+import uk.ac.hw.pm190.coralbots.simulation.Coral;
+import uk.ac.hw.pm190.coralbots.simulation.Location;
+import uk.ac.hw.pm190.coralbots.simulation.Robot;
+
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;

@@ -6,6 +6,11 @@ import java.util.Arrays;
 
 import org.junit.Test;
 
+import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
+import uk.ac.hw.pm190.coralbots.simulation.DefiniteLocationRobotFactory;
+import uk.ac.hw.pm190.coralbots.simulation.Location;
+import uk.ac.hw.pm190.coralbots.simulation.Simulation;
+
 /**
  * 
  * @author Patrick Mackinder

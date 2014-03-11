@@ -4,6 +4,11 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import uk.ac.hw.pm190.coralbots.simulation.CellContent;
+import uk.ac.hw.pm190.coralbots.simulation.Coral;
+import uk.ac.hw.pm190.coralbots.simulation.Pattern;
+import uk.ac.hw.pm190.coralbots.simulation.Water;
+
 /**
  * 
  * @author Patrick Mackinder
