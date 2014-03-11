@@ -28,6 +28,7 @@ public class WorldImageTest
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new WorldImage(sim.getWorld()));
         frame.setSize(worldEnd.getX()*10 + WINDOW_LEFT_BORDER, worldEnd.getY()*10 + WINDOW_TOP_BORDER);
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 	}
 }
