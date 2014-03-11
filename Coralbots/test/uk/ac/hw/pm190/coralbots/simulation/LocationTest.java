@@ -126,8 +126,8 @@ public class LocationTest
 	public void getRandomLocationDistance_succeeds(Location worldEnd, Location location, int distance)
 	{
 		Location randomLocation = location.randomLocation(worldEnd, distance);
-		assertTrue("X cooridnate", Math.abs(randomLocation.getX()-distance) <= distance);
-		assertTrue("Y cooridnate", Math.abs(randomLocation.getY()-distance) <= distance);
-		assertTrue("Z cooridnate", Math.abs(randomLocation.getZ()-distance) <= distance);
+		assertTrue("X coordinate", Math.abs(randomLocation.getX()-location.getX()) <= distance);
+		assertTrue("Y coordinate", Math.abs(randomLocation.getY()-location.getY()) <= distance);
+		assertTrue("Z coordinate", Math.abs(randomLocation.getZ()-location.getZ()) <= distance);
 	}
 }

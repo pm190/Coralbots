@@ -1,49 +1,67 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
+import java.util.Arrays;
+
 /**
  * 
  * @author Patrick Mackinder
  */
 public class Pattern
 {
-	private final CellContent[][] pattern;
+	private final CellContentType[][] pattern;
 	
-	public Pattern(CellContent[][] pattern)
+	public Pattern(CellContentType[][] pattern)
 	{
 		this.pattern = pattern;
 	}
 	
 	public Pattern(Cell[][] pattern)
 	{
-		CellContent[][] pat = new CellContent[3][3];
+		CellContentType[][] pat = new CellContentType[3][3];
 		for(int y = 0; y < 3; y++)
 		{
 			for(int x = 0; x < 3; x++)
 			{
-				pat[y][x] = pattern[y][x].getContents();
+				pat[y][x] = pattern[y][x].getContents().getCellContentType();
 			}
 		}
 		this.pattern = pat;
 	}
 	
-	public CellContent[][] getPattern()
+	public CellContentType[][] getPattern()
 	{
 		return pattern;
 	}
 	
-	public boolean equals(Pattern p)
+	public boolean equals(Object obj)
 	{
-		CellContent[][] pat = p.getPattern();
+		if(this == obj)
+			return true;
+		if(obj == null)
+			return false;
+		if(getClass() != obj.getClass())
+			return false;
+		Pattern p = (Pattern) obj;
+		CellContentType[][] pat = p.getPattern();
 		for(int y = 0; y < 3; y++)
 		{
 			for(int x = 0; x< 3; x++)
 			{
-				if(pattern[y][x].getCellContentType() != pat[y][x].getCellContentType())
+				if(pattern[y][x] != pat[y][x])
 				{
 					return false;
 				}
 			}
 		}
 		return true;
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(pattern);
+		return result;
 	}
 }
