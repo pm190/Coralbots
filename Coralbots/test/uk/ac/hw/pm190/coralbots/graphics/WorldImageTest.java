@@ -1,4 +1,4 @@
-package uk.ac.hw.pm190.coralbots;
+package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.util.Arrays;
 
