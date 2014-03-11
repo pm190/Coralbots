@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="rules">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rule" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="pattern">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="topLeft" type="cellType"/>
+										<xs:element name="top" type="cellType"/>
+										<xs:element name="topRight" type="cellType"/>
+										<xs:element name="middleLeft" type="cellType"/>
+										<xs:element name="middle" type="cellType"/>
+										<xs:element name="middleRight" type="cellType"/>
+										<xs:element name="bottomLeft" type="cellType"/>
+										<xs:element name="bottom" type="cellType"/>
+										<xs:element name="bottomRight" type="cellType"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="change">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="cell" type="cellLocation"/>
+										<xs:element name="type" type="cellType"/>
+									</xs:sequence>
+								</xs:complexType>				
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="cellType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Coral"/>
+			<xs:enumeration value="Water"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="cellLocation">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="topLeft"/>
+			<xs:enumeration value="top"/>
+			<xs:enumeration value="topRight"/>
+			<xs:enumeration value="middleLeft"/>
+			<xs:enumeration value="middle"/>
+			<xs:enumeration value="middleRight"/>
+			<xs:enumeration value="bottomLeft"/>
+			<xs:enumeration value="bottom"/>
+			<xs:enumeration value="bottomRight"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
