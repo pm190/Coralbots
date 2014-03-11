@@ -54,6 +54,7 @@ public class World
 		for(Robot robot : bots)
 		{
 			updateCell(robot.getLocation(), robot);
+			getCell(robot.getLocation()).incrementVisitedCount();
 			robots.add(robot);
 		}
 	}

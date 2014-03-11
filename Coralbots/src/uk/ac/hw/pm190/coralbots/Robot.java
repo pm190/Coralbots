@@ -35,6 +35,7 @@ public class Robot implements CellContent
 				world.updateCell(location, this);
 				world.getCell(old).departRobot();
 				world.getCell(location).incrementVisitedCount();
+				break;
 			}
 			catch(CellNotEmptyException | ArrayIndexOutOfBoundsException e)
 			{

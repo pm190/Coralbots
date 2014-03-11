@@ -85,9 +85,9 @@ public class Location
 	public Location randomLocation(Location end, int distance)
 	{
 		Random random = new Random();
-		int x = Math.max(0, Math.min(getX() + (random.nextInt(distance * 2) - distance), end.getX()));
-		int y = Math.max(0, Math.min(getY() + (random.nextInt(distance * 2) - distance), end.getY()));
-		int z = Math.max(0, Math.min(getZ() + (random.nextInt(distance * 2) - distance), end.getZ()));
+		int x = Math.max(0, Math.min(getX() + (random.nextInt((distance * 2)+1) - distance), end.getX()));
+		int y = Math.max(0, Math.min(getY() + (random.nextInt((distance * 2)+1) - distance), end.getY()));
+		int z = Math.max(0, Math.min(getZ() + (random.nextInt((distance * 2)+1) - distance), end.getZ()));
 		return new Location(x, y, z);
 	}
 }

@@ -21,36 +21,37 @@ public class WorldImage extends Canvas
 	{
 		super.paint(g);
 
-		int endY = world.getEnd().getY();
 		int endX = world.getEnd().getX();
+		int endY = world.getEnd().getY();
 		int endZ = world.getEnd().getZ();
-		for(int x = 0; x < endX; x++)
+		Color black = new Color(0,0,0);
+		for(int x = 0; x <= endX; x++)
 		{
-			for(int y = 0; y < endY; y++)
+			for(int y = 0; y <= endY; y++)
 			{
-				if(columnVisited(x, y, world, endZ))
+				int colVis = columnVisited(x, y, world, endZ);
+				if(colVis != 0)
 				{
-					g.setColor(new Color(255, 0, 0));
+					g.setColor(new Color(Math.min(255, colVis*10), 0, 0));
 				}
 				else
 				{
 					g.setColor(new Color(0, 0, 255));
 				}
 				g.fillRect((x*10), (y*10), 10, 10);
-				
+				g.setColor(black);
+				g.drawRect((x*10), (y*10), 10, 10);
 			}
 		}
 	}
 	
-	public boolean columnVisited(int x, int y, World world, int endZ)
+	public int columnVisited(int x, int y, World world, int endZ)
 	{
-		for(int z = 0; z < endZ; z++)
+		int total = 0;
+		for(int z = 0; z <= endZ; z++)
 		{
-			if(world.getCell(new Location(x, y, z)).getVisitedCount() > 0)
-			{
-				return true;
-			}
+			total += world.getCell(new Location(x, y, z)).getVisitedCount();
 		}
-		return false;
+		return total;
 	}
 }
