@@ -18,11 +18,11 @@ public class Pattern
 	public Pattern(Cell[][] pattern)
 	{
 		CellContentType[][] pat = new CellContentType[3][3];
-		for(int y = 0; y < 3; y++)
+		for(int x = 0; x < 3; x++)
 		{
-			for(int x = 0; x < 3; x++)
+			for(int y = 0; y < 3; y++)
 			{
-				pat[y][x] = pattern[y][x].getContents().getCellContentType();
+				pat[x][y] = pattern[x][y].getContents().getCellContentType();
 			}
 		}
 		this.pattern = pat;

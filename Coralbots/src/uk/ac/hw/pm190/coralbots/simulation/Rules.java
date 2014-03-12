@@ -38,23 +38,23 @@ public class Rules
 		for(int i = 0; i < nList.getLength(); i++)
 		{
 			Element rule = (Element)nList.item(i);
-
+			
 			Element patternNode = (Element) rule.getElementsByTagName("pattern").item(0);
 			CellContentType[][] patternCells = new CellContentType[3][3];
 			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("topLeft").item(0).getTextContent().toUpperCase().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("top").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("topRight").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("middleLeft").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("middle").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("middleRight").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("bottomLeft").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("bottom").item(0).getTextContent().toUpperCase());
-			patternCells[0][0] = CellContentType.valueOf(patternNode.getElementsByTagName("bottomRight").item(0).getTextContent().toUpperCase());
+			patternCells[1][0] = CellContentType.valueOf(patternNode.getElementsByTagName("top").item(0).getTextContent().toUpperCase());
+			patternCells[2][0] = CellContentType.valueOf(patternNode.getElementsByTagName("topRight").item(0).getTextContent().toUpperCase());
+			patternCells[0][1] = CellContentType.valueOf(patternNode.getElementsByTagName("middleLeft").item(0).getTextContent().toUpperCase());
+			patternCells[1][1] = CellContentType.valueOf(patternNode.getElementsByTagName("middle").item(0).getTextContent().toUpperCase());
+			patternCells[2][1] = CellContentType.valueOf(patternNode.getElementsByTagName("middleRight").item(0).getTextContent().toUpperCase());
+			patternCells[0][2] = CellContentType.valueOf(patternNode.getElementsByTagName("bottomLeft").item(0).getTextContent().toUpperCase());
+			patternCells[1][2] = CellContentType.valueOf(patternNode.getElementsByTagName("bottom").item(0).getTextContent().toUpperCase());
+			patternCells[2][2] = CellContentType.valueOf(patternNode.getElementsByTagName("bottomRight").item(0).getTextContent().toUpperCase());
 			Pattern pattern = new Pattern(patternCells);
 			
-			Element change = (Element) rule.getElementsByTagName("change").item(1);
+			Element change = (Element) rule.getElementsByTagName("change").item(0);
 			PatternCellLocation location = PatternCellLocation.valueOf(change.getElementsByTagName("cell").item(0).getTextContent().toUpperCase());
-			CellContentType content = CellContentType.valueOf(change.getElementsByTagName("changeTo").item(0).getTextContent().toUpperCase());
+			CellContentType content = CellContentType.valueOf(change.getElementsByTagName("type").item(0).getTextContent().toUpperCase());
 			rules.add(new Rule(pattern, location, content));
 		}
 		return rules;
