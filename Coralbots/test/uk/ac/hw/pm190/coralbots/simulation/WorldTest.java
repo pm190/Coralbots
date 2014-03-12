@@ -196,4 +196,33 @@ public class WorldTest
 			assertEquals("Inserted Robot", w.getCell(robot.getLocation()).getContents(), robot);
 		}
 	}
+	
+	@Test
+	public void insertCorals_succeeds()
+	{
+		int numCoral = 10;
+		Location worldEnd = new Location(9, 9, 9);
+		World w = new World(worldEnd);
+		w.insertCoral(numCoral);
+		int endX = w.getEnd().getX();
+		int endY = w.getEnd().getY();
+		int endZ = w.getEnd().getZ();
+		
+		int total = 0;
+		for(int x = 0; x <= endX; x++)
+		{
+			for(int y = 0; y <= endY; y++)
+			{
+				for(int z = 0; z <= endZ; z++)
+				{
+					if(w.getCell(new Location(x,y,z)).getContents().getCellContentType() == CellContentType.CORAL)
+					{
+						total++;
+					}
+				}
+			}
+		}
+		
+		assertEquals("Number of coral", numCoral, total);
+	}
 }

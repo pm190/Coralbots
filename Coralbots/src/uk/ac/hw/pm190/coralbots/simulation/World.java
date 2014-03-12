@@ -2,6 +2,7 @@ package uk.ac.hw.pm190.coralbots.simulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * 
@@ -102,5 +103,43 @@ public class World
 	public List<Robot> getRobots()
 	{
 		return robots;
+	}
+	
+	public void insertCoral(int numCorals) throws IllegalArgumentException
+	{
+		int endX = end.getX()+1;
+		int endY = end.getY()+1;
+		int endZ = end.getZ()+1;
+		
+		if(numCorals > ((endX * endY * endZ) / 4))
+		{
+			//Too much coral
+			throw new IllegalArgumentException();
+		}
+		
+		Random rand = new Random();
+		int rx=0, ry=0, rz=0, i=0;
+		while(i < numCorals)
+		{
+			rx = rand.nextInt(endX);
+			ry = rand.nextInt(endY);
+			rz = 0;
+			while(rz < endZ)
+			{
+				try
+				{
+					updateCell(new Location(rx, ry, rz), new Coral());
+					break;
+				}
+				catch(CellNotEmptyException e)
+				{
+					rz++;
+				}
+			}
+			if(rz != endZ)
+			{
+				i++;
+			}
+		}
 	}
 }

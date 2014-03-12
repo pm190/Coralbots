@@ -21,7 +21,7 @@ public class WorldImageTest
 		Location worldEnd = new Location(50,50,50);
 		Location[] locations = new Location[] { worldStart, Location.getMiddle(worldStart, worldEnd), worldEnd};
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
-		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000);
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000, 0);
 		sim.run();
 		
 		JFrame frame = new JFrame();

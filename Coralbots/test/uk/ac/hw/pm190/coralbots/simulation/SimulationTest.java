@@ -24,7 +24,7 @@ public class SimulationTest
 		Location robotLocation = new Location(1,1,1);
 		Location[] locations = new Location[] { robotLocation };
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
-		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1);
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1, 0);
 		sim.run();
 		assertFalse("Robot location changed", sim.getWorld().getRobots().get(0).getLocation().equals(robotLocation));
 	}
@@ -36,6 +36,6 @@ public class SimulationTest
 		Location[] locations = new Location[] { new Location(1,1,1), new Location(1,1,1) };
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
 		@SuppressWarnings("unused")
-		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1);
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1, 0);
 	}
 }
