@@ -21,12 +21,14 @@ public class WorldImageTest
 		Location worldEnd = new Location(50,50,50);
 		Location[] locations = new Location[] { worldStart, Location.getMiddle(worldStart, worldEnd), worldEnd};
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
-		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000, 0);
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000, 50);
 		sim.run();
 		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new WorldImage(sim.getWorld()));
+		WorldImage wi = new WorldImage(sim.getWorld(), WorldAttribute.CORAL);
+		wi.visitAttributes();
+        frame.add(wi.getPanels().get(0));
         frame.setSize(worldEnd.getX()*10 + WINDOW_LEFT_BORDER, worldEnd.getY()*10 + WINDOW_TOP_BORDER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

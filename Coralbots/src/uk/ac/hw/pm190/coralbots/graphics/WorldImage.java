@@ -1,58 +1,46 @@
 package uk.ac.hw.pm190.coralbots.graphics;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
-import uk.ac.hw.pm190.coralbots.simulation.Location;
+import javax.swing.JPanel;
+
 import uk.ac.hw.pm190.coralbots.simulation.World;
 
-public class WorldImage extends Canvas
+public class WorldImage
 {
-	private static final long serialVersionUID = 1L;
 	private final World world;
+	private final WorldAttribute[] attributes;
+	private final List<JPanel> panels = new ArrayList<JPanel>();
 
-	public WorldImage(World world)
+	public WorldImage(World world, WorldAttribute ... attributes)
 	{
 		this.world = world;
+		this.attributes = attributes;
 	}
 
-	@Override
-	public void paint(Graphics g)
+	public void visitAttributes()
 	{
-		super.paint(g);
-
 		int endX = world.getEnd().getX();
 		int endY = world.getEnd().getY();
-		int endZ = world.getEnd().getZ();
-		Color black = new Color(0,0,0);
-		for(int x = 0; x <= endX; x++)
+
+		WorldAttributeDisplay wad;
+		for(WorldAttribute attribute : attributes)
 		{
-			for(int y = 0; y <= endY; y++)
+			wad = attribute.createVisitor(world);
+			for(int x = 0; x <= endX; x++)
 			{
-				int colVis = columnVisited(x, y, world, endZ);
-				if(colVis != 0)
+				for(int y = 0; y <= endY; y++)
 				{
-					g.setColor(new Color(Math.min(255, colVis*10), 0, 0));
+					wad.visit(x, y, world.getColumn(x, y));
 				}
-				else
-				{
-					g.setColor(new Color(0, 0, 255));
-				}
-				g.fillRect((x*10), (y*10), 10, 10);
-				g.setColor(black);
-				g.drawRect((x*10), (y*10), 10, 10);
 			}
+			panels.add(wad);
 		}
 	}
-	
-	public int columnVisited(int x, int y, World world, int endZ)
+
+	public List<JPanel> getPanels()
 	{
-		int total = 0;
-		for(int z = 0; z <= endZ; z++)
-		{
-			total += world.getCell(new Location(x, y, z)).getVisitedCount();
-		}
-		return total;
+		return panels;
 	}
 }

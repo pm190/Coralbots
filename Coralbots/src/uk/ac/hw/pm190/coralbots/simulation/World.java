@@ -22,9 +22,9 @@ public class World
 			throw new IllegalArgumentException();
 		}
 		this.end = end;
-		this.xLength = end.getX()+1;
-		this.yLength = end.getY()+1;
-		this.zLength = end.getZ()+1;
+		this.xLength = end.getX() + 1;
+		this.yLength = end.getY() + 1;
+		this.zLength = end.getZ() + 1;
 		cells = new Cell[xLength][yLength][zLength];
 
 		for(int z = 0; z < zLength; z++)
@@ -33,9 +33,19 @@ public class World
 			{
 				for(int x = 0; x < xLength; x++)
 				{
-					cells[x][y][z] = new Cell(new Location(x,y,z));
+					cells[x][y][z] = new Cell(new Location(x, y, z));
 				}
 			}
+		}
+		
+		try
+		{
+			Location middle = Location.getMiddle(new Location(0,0,0), end);
+			updateCell(new Location(middle.getX(), middle.getY(), 0), new Coral());
+		}
+		catch(ArrayIndexOutOfBoundsException | CellNotEmptyException e)
+		{
+			// TODO try to place coral somewhere nearby the middle
 		}
 	}
 
@@ -43,13 +53,13 @@ public class World
 	{
 		return cells[location.getX()][location.getY()][location.getZ()];
 	}
-	
+
 	public void updateCell(Location location, CellContent content) throws ArrayIndexOutOfBoundsException, CellNotEmptyException
 	{
 		Cell cell = getCell(location);
 		cell.setContents(content);
 	}
-	
+
 	public void insertRobots(List<Robot> bots) throws CellNotEmptyException
 	{
 		for(Robot robot : bots)
@@ -59,16 +69,16 @@ public class World
 			robots.add(robot);
 		}
 	}
-	
+
 	public void updateRobots()
 	{
-		//Will do nothing if not used insertRobots
+		// Will do nothing if not used insertRobots
 		for(Robot robot : robots)
 		{
 			robot.update(this);
 		}
 	}
-	
+
 	public Cell[][] getNeighboursBelow(Location location) throws ArrayIndexOutOfBoundsException
 	{
 		if(location.getZ() < 0)
@@ -94,7 +104,7 @@ public class World
 		}
 		return neighbours;
 	}
-	
+
 	public Location getEnd()
 	{
 		return end;
@@ -104,42 +114,64 @@ public class World
 	{
 		return robots;
 	}
-	
+
+	/**
+	 * Insert number of coral blocks into simulation. Note that the number of coral
+	 * will be 1 greater than value specified in numCorals due to world inserting
+	 * a coral block at world centre during construction
+	 * 
+	 * @param numCorals
+	 * @throws IllegalArgumentException
+	 */
 	public void insertCoral(int numCorals) throws IllegalArgumentException
 	{
-		int endX = end.getX()+1;
-		int endY = end.getY()+1;
-		int endZ = end.getZ()+1;
-		
+		int endX = end.getX() + 1;
+		int endY = end.getY() + 1;
+		int endZ = end.getZ() + 1;
+
 		if(numCorals > ((endX * endY * endZ) / 4))
 		{
-			//Too much coral
+			// Too much coral
 			throw new IllegalArgumentException();
 		}
-		
-		Random rand = new Random();
-		int rx=0, ry=0, rz=0, i=0;
-		while(i < numCorals)
+
+		if(numCorals > 0)
 		{
-			rx = rand.nextInt(endX);
-			ry = rand.nextInt(endY);
-			rz = 0;
-			while(rz < endZ)
+			Random rand = new Random();
+			int rx = 0, ry = 0, rz = 0, i = 1;
+			while(i < numCorals)
 			{
-				try
+				rx = rand.nextInt(endX);
+				ry = rand.nextInt(endY);
+				rz = 0;
+				while(rz < endZ)
 				{
-					updateCell(new Location(rx, ry, rz), new Coral());
-					break;
+					try
+					{
+						updateCell(new Location(rx, ry, rz), new Coral());
+						break;
+					}
+					catch(CellNotEmptyException e)
+					{
+						rz++;
+					}
 				}
-				catch(CellNotEmptyException e)
+				if(rz != endZ)
 				{
-					rz++;
+					i++;
 				}
-			}
-			if(rz != endZ)
-			{
-				i++;
 			}
 		}
+	}
+	
+	public Cell[] getColumn(int x, int y) throws ArrayIndexOutOfBoundsException
+	{	
+		int endZ = end.getZ()+1;
+		Cell[] column = new Cell[endZ];
+		for(int z = 0; z < endZ; z++)
+		{
+			column[z] = getCell(new Location(x,y,z));
+		}
+		return column;
 	}
 }
