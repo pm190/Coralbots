@@ -2,7 +2,11 @@ package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.util.Arrays;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import uk.ac.hw.pm190.coralbots.graphics.WorldImage;
 import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
@@ -11,10 +15,7 @@ import uk.ac.hw.pm190.coralbots.simulation.Location;
 import uk.ac.hw.pm190.coralbots.simulation.Simulation;
 
 public class WorldImageTest
-{
-	private static final int WINDOW_LEFT_BORDER = 26;
-	private static final int WINDOW_TOP_BORDER = 48;
-	
+{	
 	public static void main(String[] args) throws CellNotEmptyException
 	{
 		Location worldStart = new Location(0,0,0);
@@ -26,10 +27,15 @@ public class WorldImageTest
 		
 		JFrame frame = new JFrame();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		WorldImage wi = new WorldImage(sim.getWorld(), WorldAttribute.CORAL);
+		WorldImage wi = new WorldImage(sim.getWorld(), WorldAttribute.FREQUENCY, WorldAttribute.CORAL);
 		wi.visitAttributes();
-        frame.add(wi.getPanels().get(0));
-        frame.setSize(worldEnd.getX()*10 + WINDOW_LEFT_BORDER, worldEnd.getY()*10 + WINDOW_TOP_BORDER);
+		JPanel contentPanel = new JPanel();
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		contentPanel.add(wi.getPanels().get(0));
+		contentPanel.add(new JSeparator(SwingConstants.VERTICAL));
+		contentPanel.add(wi.getPanels().get(1));
+		frame.add(contentPanel);
+        frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 	}

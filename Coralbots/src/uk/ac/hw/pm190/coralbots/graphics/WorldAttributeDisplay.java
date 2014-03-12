@@ -1,6 +1,7 @@
 package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ public abstract class WorldAttributeDisplay extends JPanel implements ColumnVisi
 		this.sizex = sizex;
 		this.sizey = sizey;
 		colors = new Color[sizex][sizey];
+		setPreferredSize(new Dimension(sizex*10, sizey*10));
 	}
 	
 	public Color getColor(int x, int y)

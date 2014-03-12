@@ -41,7 +41,9 @@ public class World
 		try
 		{
 			Location middle = Location.getMiddle(new Location(0,0,0), end);
-			updateCell(new Location(middle.getX(), middle.getY(), 0), new Coral());
+			Location initialReefCell = new Location(middle.getX(), middle.getY(), 0);
+			updateCell(initialReefCell, new Coral());
+			setReefCell(initialReefCell, true);
 		}
 		catch(ArrayIndexOutOfBoundsException | CellNotEmptyException e)
 		{
@@ -173,5 +175,10 @@ public class World
 			column[z] = getCell(new Location(x,y,z));
 		}
 		return column;
+	}
+	
+	public void setReefCell(Location location, boolean isReef)
+	{
+		getCell(location).setReef(isReef);
 	}
 }

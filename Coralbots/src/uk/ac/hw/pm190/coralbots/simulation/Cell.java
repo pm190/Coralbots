@@ -9,6 +9,7 @@ public class Cell
 	private final Location location;
 	private CellContent contents;
 	private int visitedCount;
+	private boolean isReef;
 
 	public Cell(Location location)
 	{
@@ -52,5 +53,15 @@ public class Cell
 	public void incrementVisitedCount()
 	{
 		visitedCount++;
+	}
+
+	public boolean isReef()
+	{
+		return isReef;
+	}
+
+	public void setReef(boolean isReef)
+	{
+		this.isReef = isReef;
 	}
 }
