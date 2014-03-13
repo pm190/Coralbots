@@ -12,14 +12,21 @@ public enum WorldAttribute
 	{
 		public WorldAttributeDisplay createVisitor(World world)
 		{
-			return new FrequencyVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1, FREQUENCY);
+			return new FrequencyVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
 	},
 	CORAL
 	{
 		public WorldAttributeDisplay createVisitor(World world)
 		{
-			return new CoralVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1, CORAL);
+			return new CoralVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
+		}
+	},
+	ROCK
+	{
+		public WorldAttributeDisplay createVisitor(World world)
+		{
+			return new RockVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
 	};
 	

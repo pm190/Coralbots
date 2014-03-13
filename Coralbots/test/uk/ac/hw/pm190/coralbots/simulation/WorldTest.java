@@ -232,7 +232,7 @@ public class WorldTest
 		Location end = new Location(9,9,9);
 		World w = new World(end);
 		Location middle = Location.getMiddle(new Location(0,0,0), end);
-		CellContentType cc = w.getCell(new Location(middle.getX(), middle.getY(), 0)).getContents().getCellContentType();
-		assertEquals("Middle bottom cell is coral", cc, CellContentType.CORAL);
+		CellContentType cc = w.getCell(new Location(middle.getX(), middle.getY(), 1)).getContents().getCellContentType();
+		assertEquals("Middle bottom cell above rock layer is coral", cc, CellContentType.CORAL);
 	}
 }

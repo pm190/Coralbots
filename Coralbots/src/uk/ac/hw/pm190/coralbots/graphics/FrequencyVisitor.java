@@ -11,9 +11,9 @@ public class FrequencyVisitor extends WorldAttributeDisplay
 {
 	private static final long serialVersionUID = 1L;
 
-	public FrequencyVisitor(int sizex, int sizey, WorldAttribute attribute)
+	public FrequencyVisitor(int sizex, int sizey)
 	{
-		super(sizex, sizey, attribute);
+		super(sizex, sizey, WorldAttribute.FREQUENCY);
 	}
 
 	@Override

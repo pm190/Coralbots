@@ -1,6 +1,7 @@
 package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.awt.Color;
+
 import uk.ac.hw.pm190.coralbots.simulation.Cell;
 import uk.ac.hw.pm190.coralbots.simulation.CellContentType;
 
@@ -8,20 +9,22 @@ import uk.ac.hw.pm190.coralbots.simulation.CellContentType;
  * 
  * @author Patrick Mackinder
  */
-public class CoralVisitor extends WorldAttributeDisplay
+public class RockVisitor extends WorldAttributeDisplay
 {
 	private static final long serialVersionUID = 1L;
-	public CoralVisitor(int sizex, int sizey)
+
+	public RockVisitor(int sizex, int sizey)
 	{
-		super(sizex, sizey, WorldAttribute.CORAL);
+		super(sizex, sizey, WorldAttribute.ROCK);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public void visit(int x, int y, Cell[] column)
 	{
-		if(hasCoral(column))
+		if(hasRock(column))
 		{
-			setColor(x, y, new Color(0, 255, 0));
+			setColor(x, y, new Color(255, 165, 0));
 		}
 		else
 		{
@@ -29,11 +32,11 @@ public class CoralVisitor extends WorldAttributeDisplay
 		}
 	}
 	
-	private boolean hasCoral(Cell[] column)
+	private boolean hasRock(Cell[] column)
 	{
 		for(int z = 0; z < column.length; z++)
 		{
-			if(column[z].getContents().getCellContentType() == CellContentType.CORAL)
+			if(column[z].getContents().getCellContentType() == CellContentType.ROCK)
 			{
 				return true;
 			}

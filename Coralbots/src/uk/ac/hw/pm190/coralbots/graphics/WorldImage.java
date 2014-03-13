@@ -3,8 +3,6 @@ package uk.ac.hw.pm190.coralbots.graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
-
 import uk.ac.hw.pm190.coralbots.simulation.World;
 
 public class WorldImage

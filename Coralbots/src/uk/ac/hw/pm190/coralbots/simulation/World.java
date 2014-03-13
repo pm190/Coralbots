@@ -34,6 +34,17 @@ public class World
 				for(int x = 0; x < xLength; x++)
 				{
 					cells[x][y][z] = new Cell(new Location(x, y, z));
+					if(z == 0)
+					{
+						try
+						{
+							cells[x][y][z].setContents(new Rock());
+						}
+						catch(CellNotEmptyException e)
+						{
+							// Should never get here
+						}
+					}
 				}
 			}
 		}
@@ -41,7 +52,7 @@ public class World
 		try
 		{
 			Location middle = Location.getMiddle(new Location(0,0,0), end);
-			Location initialReefCell = new Location(middle.getX(), middle.getY(), 0);
+			Location initialReefCell = new Location(middle.getX(), middle.getY(), 1);
 			updateCell(initialReefCell, new Coral());
 			setReefCell(initialReefCell, true);
 		}

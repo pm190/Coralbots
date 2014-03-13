@@ -8,5 +8,6 @@ public enum CellContentType
 {
 	WATER,
 	CORAL,
+	ROCK,
 	ROBOT;
 }
