@@ -11,7 +11,7 @@ public class WorldImage
 {
 	private final World world;
 	private final WorldAttribute[] attributes;
-	private final List<JPanel> panels = new ArrayList<JPanel>();
+	private final List<WorldAttributeDisplay> panels = new ArrayList<WorldAttributeDisplay>();
 
 	public WorldImage(World world, WorldAttribute ... attributes)
 	{
@@ -39,7 +39,7 @@ public class WorldImage
 		}
 	}
 
-	public List<JPanel> getPanels()
+	public List<WorldAttributeDisplay> getPanels()
 	{
 		return panels;
 	}

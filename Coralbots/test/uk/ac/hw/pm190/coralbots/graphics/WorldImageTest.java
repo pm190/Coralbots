@@ -2,12 +2,7 @@ package uk.ac.hw.pm190.coralbots.graphics;
 
 import java.util.Arrays;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.SwingConstants;
-
 import uk.ac.hw.pm190.coralbots.graphics.WorldImage;
 import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
 import uk.ac.hw.pm190.coralbots.simulation.DefiniteLocationRobotFactory;
@@ -29,12 +24,7 @@ public class WorldImageTest
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		WorldImage wi = new WorldImage(sim.getWorld(), WorldAttribute.FREQUENCY, WorldAttribute.CORAL);
 		wi.visitAttributes();
-		JPanel contentPanel = new JPanel();
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		contentPanel.add(wi.getPanels().get(0));
-		contentPanel.add(new JSeparator(SwingConstants.VERTICAL));
-		contentPanel.add(wi.getPanels().get(1));
-		frame.add(contentPanel);
+		frame.add(wi.getPanels().get(0));
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

@@ -16,12 +16,14 @@ public abstract class WorldAttributeDisplay extends JPanel implements ColumnVisi
 	private final Color[][] colors;
 	private final int sizex;
 	private final int sizey;
+	private final WorldAttribute attribute;
 
-	public WorldAttributeDisplay(int sizex, int sizey)
+	public WorldAttributeDisplay(int sizex, int sizey, WorldAttribute attribute)
 	{
 		this.sizex = sizex;
 		this.sizey = sizey;
 		colors = new Color[sizex][sizey];
+		this.attribute = attribute;
 		setPreferredSize(new Dimension(sizex*10, sizey*10));
 	}
 	
@@ -60,5 +62,10 @@ public abstract class WorldAttributeDisplay extends JPanel implements ColumnVisi
 				g.drawRect((x*10), (y*10), 10, 10);
 			}
 		}
+	}
+
+	public WorldAttribute getAttribute()
+	{
+		return attribute;
 	}
 }
