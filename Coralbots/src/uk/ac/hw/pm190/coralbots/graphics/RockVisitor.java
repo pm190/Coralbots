@@ -9,14 +9,13 @@ import uk.ac.hw.pm190.coralbots.simulation.CellContentType;
  * 
  * @author Patrick Mackinder
  */
-public class RockVisitor extends WorldAttributeDisplay
+public class RockVisitor extends WorldAttributeVisitor
 {
 	private static final long serialVersionUID = 1L;
 
 	public RockVisitor(int sizex, int sizey)
 	{
 		super(sizex, sizey, WorldAttribute.ROCK);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

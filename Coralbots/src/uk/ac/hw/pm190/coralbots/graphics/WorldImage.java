@@ -9,7 +9,7 @@ public class WorldImage
 {
 	private final World world;
 	private final WorldAttribute[] attributes;
-	private final List<WorldAttributeDisplay> panels = new ArrayList<WorldAttributeDisplay>();
+	private final List<WorldAttributeVisitor> panels = new ArrayList<WorldAttributeVisitor>();
 
 	public WorldImage(World world, WorldAttribute ... attributes)
 	{
@@ -22,7 +22,7 @@ public class WorldImage
 		int endX = world.getEnd().getX();
 		int endY = world.getEnd().getY();
 
-		WorldAttributeDisplay wad;
+		WorldAttributeVisitor wad;
 		for(WorldAttribute attribute : attributes)
 		{
 			wad = attribute.createVisitor(world);
@@ -37,7 +37,7 @@ public class WorldImage
 		}
 	}
 
-	public List<WorldAttributeDisplay> getPanels()
+	public List<WorldAttributeVisitor> getPanels()
 	{
 		return panels;
 	}

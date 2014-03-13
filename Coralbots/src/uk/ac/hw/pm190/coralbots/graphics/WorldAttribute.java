@@ -10,25 +10,33 @@ public enum WorldAttribute
 {
 	FREQUENCY
 	{
-		public WorldAttributeDisplay createVisitor(World world)
+		public WorldAttributeVisitor createVisitor(World world)
 		{
 			return new FrequencyVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
 	},
 	CORAL
 	{
-		public WorldAttributeDisplay createVisitor(World world)
+		public WorldAttributeVisitor createVisitor(World world)
 		{
 			return new CoralVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
 	},
 	ROCK
 	{
-		public WorldAttributeDisplay createVisitor(World world)
+		public WorldAttributeVisitor createVisitor(World world)
 		{
 			return new RockVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
+	},
+	REEF
+	{
+		public WorldAttributeVisitor createVisitor(World world)
+		{
+			return new ReefVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
+		}
 	};
 	
-	public abstract WorldAttributeDisplay createVisitor(World world);
+	
+	public abstract WorldAttributeVisitor createVisitor(World world);
 }

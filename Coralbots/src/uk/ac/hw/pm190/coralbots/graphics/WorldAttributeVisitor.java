@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  * 
  * @author Patrick Mackinder
  */
-public abstract class WorldAttributeDisplay extends JPanel implements ColumnVisitor
+public abstract class WorldAttributeVisitor extends JPanel implements ColumnVisitor
 {
 	private static final long serialVersionUID = 1L;
 	private final Color[][] colors;
@@ -18,7 +18,7 @@ public abstract class WorldAttributeDisplay extends JPanel implements ColumnVisi
 	private final int sizey;
 	private final WorldAttribute attribute;
 
-	public WorldAttributeDisplay(int sizex, int sizey, WorldAttribute attribute)
+	public WorldAttributeVisitor(int sizex, int sizey, WorldAttribute attribute)
 	{
 		this.sizex = sizex;
 		this.sizey = sizey;

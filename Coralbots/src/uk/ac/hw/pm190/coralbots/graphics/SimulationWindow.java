@@ -31,9 +31,9 @@ public class SimulationWindow extends JFrame implements ItemListener
 		
 		int numPanels = worldImage.getPanels().size();
 		WorldAttribute[] attributes = new WorldAttribute[numPanels];
-		List<WorldAttributeDisplay> wads = worldImage.getPanels();
+		List<WorldAttributeVisitor> wads = worldImage.getPanels();
 		
-		WorldAttributeDisplay wad;
+		WorldAttributeVisitor wad;
 		WorldAttribute attr;
 		for(int i = 0; i < numPanels; i++)
 		{

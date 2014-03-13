@@ -8,7 +8,7 @@ import uk.ac.hw.pm190.coralbots.simulation.CellContentType;
  * 
  * @author Patrick Mackinder
  */
-public class CoralVisitor extends WorldAttributeDisplay
+public class CoralVisitor extends WorldAttributeVisitor
 {
 	private static final long serialVersionUID = 1L;
 	public CoralVisitor(int sizex, int sizey)
