@@ -1,15 +1,28 @@
 <rules>
 	<rule>
 		<pattern>
-			<topLeft>junk</topLeft>
-			<top>Water</top>
-			<topRight>Water</topRight>
-			<middleLeft>Water</middleLeft>
-			<middle>Water</middle>
-			<middleRight>Water</middleRight>
-			<bottomLeft>Water</bottomLeft>
-			<bottom>Water</bottom>
-			<bottomRight>Water</bottomRight>
+			<upper>
+				<topLeft>junk</topLeft>
+				<top>Water</top>
+				<topRight>Water</topRight>
+				<middleLeft>Water</middleLeft>
+				<middle>Water</middle>
+				<middleRight>Water</middleRight>
+				<bottomLeft>Water</bottomLeft>
+				<bottom>Water</bottom>
+				<bottomRight>Water</bottomRight>
+			</upper>
+			<lower>
+				<topLeft>Water</topLeft>
+				<top>Water</top>
+				<topRight>Water</topRight>
+				<middleLeft>Water</middleLeft>
+				<middle>Water</middle>
+				<middleRight>Water</middleRight>
+				<bottomLeft>Water</bottomLeft>
+				<bottom>Water</bottom>
+				<bottomRight>Water</bottomRight>
+			</lower>
 		</pattern>
 		<change>
 			<cell>middle</cell>

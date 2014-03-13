@@ -9,15 +9,36 @@
 							<xs:element name="pattern">
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="topLeft" type="cellType"/>
-										<xs:element name="top" type="cellType"/>
-										<xs:element name="topRight" type="cellType"/>
-										<xs:element name="middleLeft" type="cellType"/>
-										<xs:element name="middle" type="cellType"/>
-										<xs:element name="middleRight" type="cellType"/>
-										<xs:element name="bottomLeft" type="cellType"/>
-										<xs:element name="bottom" type="cellType"/>
-										<xs:element name="bottomRight" type="cellType"/>
+										<xs:element name="upper">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="topLeft" type="cellType"/>
+													<xs:element name="top" type="cellType"/>
+													<xs:element name="topRight" type="cellType"/>
+													<xs:element name="middleLeft" type="cellType"/>
+													<xs:element name="middle" type="cellType"/>
+													<xs:element name="middleRight" type="cellType"/>
+													<xs:element name="bottomLeft" type="cellType"/>
+													<xs:element name="bottom" type="cellType"/>
+													<xs:element name="bottomRight" type="cellType"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="lower">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="topLeft" type="cellType"/>
+													<xs:element name="top" type="cellType"/>
+													<xs:element name="topRight" type="cellType"/>
+													<xs:element name="middleLeft" type="cellType"/>
+													<xs:element name="middle" type="cellType"/>
+													<xs:element name="middleRight" type="cellType"/>
+													<xs:element name="bottomLeft" type="cellType"/>
+													<xs:element name="bottom" type="cellType"/>
+													<xs:element name="bottomRight" type="cellType"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>

@@ -17,9 +17,10 @@ public class RuleTest
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}};
-		Pattern p = new Pattern(pattern);
-		Rule r = new Rule(p, PatternCellLocation.MIDDLE, CellContentType.CORAL);
-		Rule r2 = new Rule(p, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		Pattern up = new Pattern(pattern);
+		Pattern down = new Pattern(pattern);
+		Rule r = new Rule(up, down, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		Rule r2 = new Rule(up, down, PatternCellLocation.MIDDLE, CellContentType.CORAL);
 		
 		assertTrue("Rules are equal", r.equals(r2));
 	}
@@ -31,15 +32,17 @@ public class RuleTest
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}};
-		Pattern p = new Pattern(pattern);
-		Rule r = new Rule(p, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		Pattern up = new Pattern(pattern);
+		Pattern down = new Pattern(pattern);
+		Rule r = new Rule(up, down, PatternCellLocation.MIDDLE, CellContentType.CORAL);
 		
 		CellContentType[][] pattern2 = new CellContentType[][] {
 				{CellContentType.CORAL, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}};
-		Pattern p2 = new Pattern(pattern2);
-		Rule r2 = new Rule(p2, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		Pattern up2 = new Pattern(pattern2);
+		Pattern down2 = new Pattern(pattern2);
+		Rule r2 = new Rule(up2, down2, PatternCellLocation.MIDDLE, CellContentType.CORAL);
 		
 		assertFalse("Rules are not equal", r.equals(r2));
 	}

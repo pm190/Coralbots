@@ -13,15 +13,15 @@
 				<bottomRight>Water</bottomRight>
 			</upper>
 			<lower>
-				<topLeft>Water</topLeft>
-				<top>Water</top>
-				<topRight>Water</topRight>
-				<middleLeft>Water</middleLeft>
-				<middle>Water</middle>
-				<middleRight>Water</middleRight>
-				<bottomLeft>Water</bottomLeft>
-				<bottom>Water</bottom>
-				<bottomRight>Water</bottomRight>
+				<topLeft>Coral</topLeft>
+				<top>Coral</top>
+				<topRight>Coral</topRight>
+				<middleLeft>Coral</middleLeft>
+				<middle>Coral</middle>
+				<middleRight>Coral</middleRight>
+				<bottomLeft>Coral</bottomLeft>
+				<bottom>Coral</bottom>
+				<bottomRight>Coral</bottomRight>
 			</lower>
 		</pattern>
 		<change>

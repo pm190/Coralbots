@@ -37,7 +37,7 @@ public class RulesTest
 	}
 	
 	@Test
-	public void parseRules_validFile_knownPattern_suceeds() throws SAXException, IOException, ParserConfigurationException
+	public void parseRules_validFile_knownPattern_succeeds() throws SAXException, IOException, ParserConfigurationException
 	{
 		File schema = new File("resources/rules.xsd");
 		File source = new File("test/resources/knownRules.xml");
@@ -46,8 +46,32 @@ public class RulesTest
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
 				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}};
-		Pattern p = new Pattern(pattern);
-		Rule r = new Rule(p, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		Pattern up = new Pattern(pattern);
+		Pattern down = new Pattern(pattern);
+		Rule r = new Rule(up, down, PatternCellLocation.MIDDLE, CellContentType.CORAL);
+		
+		Collection<Rule> rules = Rules.parseRulesFile(schema, source);
+		assertTrue("Matching pattern", rules.contains(r));
+	}
+	
+	@Test
+	public void parseRules_validFile_knownPatternDifferentUpperLower_succeeds() throws SAXException, IOException, ParserConfigurationException
+	{
+		File schema = new File("resources/rules.xsd");
+		File source = new File("test/resources/differentUpperLower.xml");
+		
+		CellContentType[][] upper = new CellContentType[][] {
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}};
+		Pattern up = new Pattern(upper);
+		
+		CellContentType[][] lower = new CellContentType[][] {
+				{CellContentType.CORAL, CellContentType.CORAL, CellContentType.CORAL}, 
+				{CellContentType.CORAL, CellContentType.CORAL, CellContentType.CORAL}, 
+				{CellContentType.CORAL, CellContentType.CORAL, CellContentType.CORAL}};
+		Pattern down = new Pattern(lower);
+		Rule r = new Rule(up, down, PatternCellLocation.MIDDLE, CellContentType.CORAL);
 		
 		Collection<Rule> rules = Rules.parseRulesFile(schema, source);
 		assertTrue("Matching pattern", rules.contains(r));
