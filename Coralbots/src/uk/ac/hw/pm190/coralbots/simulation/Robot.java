@@ -24,17 +24,18 @@ public class Robot implements CellContent
 	{
 		//MOVE
 		int attempts = 0;
+		Location newLoc;
 		while(attempts < 5)
 		{
 			try
 			{
-				Location old = location;
 				//TODO movement rules, for now just move randomly up to 3 cells away
-				location = location.randomLocation(world.getEnd(), 3);
+				newLoc = location.randomLocation(world.getEnd(), 3);
 				//location = new Location(location.getX()+1, location.getY()+1, location.getZ()+1);
-				world.updateCell(location, this);
-				world.getCell(old).departRobot();
-				world.getCell(location).incrementVisitedCount();
+				world.updateCell(newLoc, this);
+				world.getCell(location).departRobot();
+				world.getCell(newLoc).incrementVisitedCount();
+				location = newLoc;
 				break;
 			}
 			catch(CellNotEmptyException | ArrayIndexOutOfBoundsException e)
