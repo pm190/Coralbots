@@ -22,7 +22,12 @@ public class SimulationWindowTest
 		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000, 50);
 		sim.run();
 
-		WorldImage wi = new WorldImage(sim.getWorld(), WorldAttribute.FREQUENCY, WorldAttribute.CORAL, WorldAttribute.ROCK, WorldAttribute.REEF);
+		WorldImage wi = new WorldImage(sim.getWorld(), 
+				WorldAttribute.FREQUENCY, 
+				WorldAttribute.CORAL, 
+				WorldAttribute.ROCK, 
+				WorldAttribute.REEF,
+				WorldAttribute.TOPDOWN);
 		SimulationWindow simWin = new SimulationWindow();
 		simWin.display(wi);
 	}

@@ -23,7 +23,7 @@ public class RockVisitor extends WorldAttributeVisitor
 	{
 		if(hasRock(column))
 		{
-			setColor(x, y, new Color(255, 165, 0));
+			setColor(x, y, new Color(160, 160, 160));
 		}
 		else
 		{

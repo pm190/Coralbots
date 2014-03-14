@@ -35,6 +35,13 @@ public enum WorldAttribute
 		{
 			return new ReefVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
 		}
+	},
+	TOPDOWN
+	{
+		public WorldAttributeVisitor createVisitor(World world)
+		{
+			return new TopDownVisitor(world.getEnd().getX()+1, world.getEnd().getY()+1);
+		}
 	};
 	
 	
