@@ -31,4 +31,58 @@ public class PatternTest
 		Pattern p2 = new Pattern(pattern2);
 		assertFalse("Pattern matches", p1.equals(p2));
 	}
+	
+	@Test
+	public void patternMatch_90degrees_succeeds()
+	{
+		CellContentType[][] pattern1 = new CellContentType[][] 
+				{{CellContentType.WATER, CellContentType.CORAL, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.CORAL, CellContentType.WATER, CellContentType.CORAL}};
+		
+		CellContentType[][] pattern2 = new CellContentType[][] 
+				{{CellContentType.CORAL, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.CORAL}, 
+				{CellContentType.CORAL, CellContentType.WATER, CellContentType.WATER}};
+		
+		Pattern p1 = new Pattern(pattern1);
+		Pattern p2 = new Pattern(pattern2);
+		assertTrue("Pattern matches", p1.equals(p2));
+	}
+	
+	@Test
+	public void patternMatch_180degrees_succeeds()
+	{
+		CellContentType[][] pattern1 = new CellContentType[][] 
+				{{CellContentType.CORAL, CellContentType.WATER, CellContentType.CORAL}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.CORAL, CellContentType.WATER}};
+		
+		CellContentType[][] pattern2 = new CellContentType[][] 
+				{{CellContentType.WATER, CellContentType.CORAL, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.CORAL, CellContentType.WATER, CellContentType.CORAL}};
+		
+		Pattern p1 = new Pattern(pattern1);
+		Pattern p2 = new Pattern(pattern2);
+		assertTrue("Pattern matches", p1.equals(p2));
+	}
+	
+	@Test
+	public void patternMatch_270degrees_succeeds()
+	{
+		CellContentType[][] pattern1 = new CellContentType[][] 
+				{{CellContentType.WATER, CellContentType.CORAL, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.CORAL, CellContentType.WATER, CellContentType.CORAL}};
+		
+		CellContentType[][] pattern2 = new CellContentType[][] 
+				{{CellContentType.WATER, CellContentType.WATER, CellContentType.CORAL}, 
+				{CellContentType.CORAL, CellContentType.WATER, CellContentType.WATER}, 
+				{CellContentType.WATER, CellContentType.WATER, CellContentType.CORAL}};
+		
+		Pattern p1 = new Pattern(pattern1);
+		Pattern p2 = new Pattern(pattern2);
+		assertTrue("Pattern matches", p1.equals(p2));
+	}
 }
