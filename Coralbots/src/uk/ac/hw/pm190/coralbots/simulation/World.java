@@ -2,8 +2,10 @@ package uk.ac.hw.pm190.coralbots.simulation;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 /**
  * 
@@ -186,50 +188,53 @@ public class World
 		attachSurroundingCoralToReef();
 	}
 	
-	private void attachSurroundingCoralToReef()
+	public void attachSurroundingCoralToReef()
 	{
 		//TODO get initReefLocation, possible field in world class
 		Location middle = Location.getMiddle(new Location(0,0,0), end);
-		Location initialReefCell = new Location(middle.getX(), middle.getY(), 1);
-		Collection<Cell> cellRing;
-		boolean coral = true;
-		int distance = 1;
-		while(coral)
+		Location initialReefLocation = new Location(middle.getX(), middle.getY(), 1);
+		Set<Cell> reef = new HashSet<Cell>();
+		setReef(reef, getNeighbours(initialReefLocation));
+		for(Cell cell : reef)
 		{
-			cellRing = getNeighbourRing(initialReefCell, distance);
-			coral = false;
-			for(Cell cell : cellRing)
+			setReefCell(cell.getLocation(), true);
+		}
+	}
+	
+	private void setReef(Set<Cell> reef, Collection<Cell> cells)
+	{
+		for(Cell cell : cells)
+		{
+			if(cell.getContents().getCellContentType() == CellContentType.CORAL)
 			{
-				if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+				if(reef.add(cell))
 				{
-					coral = true;
-					setReefCell(cell.getLocation(), true);
+					setReef(reef, getNeighbours(cell.getLocation()));
 				}
-			}
-			if(coral)
-			{
-				distance++;
 			}
 		}
 	}
 	
-	private Collection<Cell> getNeighbourRing(Location loc, int distance)
+	private Collection<Cell> getNeighbours(Location loc) throws ArrayIndexOutOfBoundsException
 	{
 		int middleX = loc.getX();
 		int middleY = loc.getY();
 		int middleZ = loc.getZ();
-		Collection<Cell> cellRing = new ArrayList<Cell>();
-		for(int x = middleX - distance; x <= middleX + distance; x++)
+		Cell cell = getCell(loc);
+		Cell neighbour;
+		Collection<Cell> neighbours = new ArrayList<Cell>();
+		for(int x = middleX - 1; x <= middleX + 1; x++)
 		{
-			for(int y = middleY - distance; y <= middleY + distance; y++)
+			for(int y = middleY - 1; y <= middleY + 1; y++)
 			{
-				for(int z = middleZ - distance; z <= middleZ + distance; z++)
+				for(int z = middleZ - 1; z <= middleZ + 1; z++)
 				{
-					if(Math.abs(z - middleZ) == distance || Math.abs(y - middleY) == distance || Math.abs(x - middleX) == distance)
+					neighbour = getCell(new Location(x, y, z));
+					if(cell != neighbour)
 					{
 						try
 						{
-							cellRing.add(getCell(new Location(x,y,z)));
+							neighbours.add(getCell(new Location(x,y,z)));
 						}
 						catch(ArrayIndexOutOfBoundsException e)
 						{
@@ -239,7 +244,7 @@ public class World
 				}
 			}
 		}
-		return cellRing;
+		return neighbours;
 	}
 	
 	public Cell[] getColumn(int x, int y) throws ArrayIndexOutOfBoundsException

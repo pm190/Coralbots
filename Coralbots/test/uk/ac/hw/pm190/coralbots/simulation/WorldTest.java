@@ -227,12 +227,41 @@ public class WorldTest
 	}
 	
 	@Test
-	public void middleBottomCellAlwaysCoral_suceeds()
+	public void middleBottomCellAlwaysCoral_succeeds()
 	{
 		Location end = new Location(9,9,9);
 		World w = new World(end);
 		Location middle = Location.getMiddle(new Location(0,0,0), end);
 		CellContentType cc = w.getCell(new Location(middle.getX(), middle.getY(), 1)).getContents().getCellContentType();
-		assertEquals("Middle bottom cell above rock layer is coral", cc, CellContentType.CORAL);
+		assertEquals("Middle bottom cell above rock layer is coral", CellContentType.CORAL, cc);
+	}
+	
+	@Test
+	public void initialReef_succeeds() throws ArrayIndexOutOfBoundsException, CellNotEmptyException
+	{
+		Location end = new Location(9,9,9);
+		World w = new World(end);
+		Location middle = Location.getMiddle(new Location(0,0,0), end);
+		Location initialCoral = new Location(middle.getX(), middle.getY(), 1);
+		for(int i = 1; i < 4; i++)
+		{
+			w.updateCell(new Location(initialCoral.getX()+i, initialCoral.getY(), initialCoral.getZ()), new Coral());
+		}
+		w.attachSurroundingCoralToReef();
+		int totalCoralInReef = 0;
+		for(int x = 0; x <= end.getX(); x++)
+		{
+			for(int y = 0; y <= end.getY(); y++)
+			{
+				for(int z = 0; z <= end.getZ(); z++)
+				{
+					if(w.getCell(new Location(x,y,z)).isReef())
+					{
+						totalCoralInReef++;
+					}
+				}
+			}
+		}
+		assertEquals("Total Reef Cells", 4, totalCoralInReef);
 	}
 }
