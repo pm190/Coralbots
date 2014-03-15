@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
 import java.util.List;
 
 import javax.swing.BoxLayout;
@@ -14,9 +15,9 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import uk.ac.hw.pm190.coralbots.simulation.Location;
@@ -62,8 +63,9 @@ public class SimulationWindow extends JFrame implements ItemListener
 		simOpts.add(corals);
 		
 		JPanel rulePane = new JPanel(new BorderLayout());
-		JTextArea ruleFiles = new JTextArea();
-		ruleFiles.setEditable(false);
+		File rulesFolder = new File("test/resources");
+		String[] ruleFileNames = rulesFolder.list();
+		final JList<String> ruleFiles = new JList<String>(ruleFileNames);
 		rulePane.add(ruleFiles);
 		
 		JPanel runButtonPane = new JPanel(new BorderLayout());
@@ -77,9 +79,10 @@ public class SimulationWindow extends JFrame implements ItemListener
 				int z = Integer.parseInt(endZ.getText());
 				Location worldEnd = new Location(x,y,z);
 				int bots = Integer.parseInt(robots.getText());
+				String rulesPath = ruleFiles.getSelectedValue();
 				int cyc = Integer.parseInt(cycles.getText());
 				int cor = Integer.parseInt(corals.getText());
-				Simulation sim = new Simulation(worldEnd, bots, new RandomLocationRobotFactory(), cyc, cor);
+				Simulation sim = new Simulation(worldEnd, bots, new RandomLocationRobotFactory(), new File(rulesPath), cyc, cor);
 				sim.run();
 				WorldImage wi = new WorldImage(sim.getWorld(),
 						WorldAttribute.FREQUENCY,
@@ -103,7 +106,7 @@ public class SimulationWindow extends JFrame implements ItemListener
 		add(scroll);
 		setTitle("Coralbots Simulation Manager");
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setSize(800,800);
+		setSize(600,600);
 		setLocationRelativeTo(null);
 		setVisible(true);
 	}

@@ -2,12 +2,17 @@ package uk.ac.hw.pm190.coralbots.simulation;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.xml.sax.SAXException;
 
 import uk.ac.hw.pm190.coralbots.simulation.Location;
 import uk.ac.hw.pm190.coralbots.simulation.RandomLocationRobotFactory;
@@ -37,19 +42,19 @@ public class RandomLocationRobotFactoryTest
 	
 	@Test
 	@UseDataProvider("validRobotNumbersAndWorldEnds")
-	public void createRobots_validNumber_suceeds(Location worldEnd, int robotNumber)
+	public void createRobots_validNumber_suceeds(Location worldEnd, int robotNumber) throws SAXException, IOException, ParserConfigurationException
 	{
 		RandomLocationRobotFactory rFactory = new RandomLocationRobotFactory();
-		List<Robot> robots = rFactory.createRobots(robotNumber, worldEnd);
+		List<Robot> robots = rFactory.createRobots(robotNumber, worldEnd, new File("test/resources/validRules.xml"));
 		assertEquals(robots.size(), robotNumber);
 	}
 
 	@Test
 	@UseDataProvider("validRobotNumbersAndWorldEnds")
-	public void createRubots_validNumber_differentLocations_succeeds(Location worldEnd, int robotNumber)
+	public void createRubots_validNumber_differentLocations_succeeds(Location worldEnd, int robotNumber) throws SAXException, IOException, ParserConfigurationException
 	{
 		RandomLocationRobotFactory rFactory = new RandomLocationRobotFactory();
-		List<Robot> robots = rFactory.createRobots(robotNumber, worldEnd);
+		List<Robot> robots = rFactory.createRobots(robotNumber, worldEnd, new File("test/resources/validRules.xml"));
 		for(int i = 0; i < robots.size(); i++)
 		{
 			for(int j = 0; j < robots.size(); j++)

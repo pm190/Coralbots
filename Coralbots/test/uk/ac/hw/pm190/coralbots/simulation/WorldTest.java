@@ -2,6 +2,8 @@ package uk.ac.hw.pm190.coralbots.simulation;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -9,8 +11,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.xml.sax.SAXException;
 
 import uk.ac.hw.pm190.coralbots.simulation.Cell;
 import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
@@ -184,12 +189,12 @@ public class WorldTest
 	}
 
 	@Test
-	public void insertRobots_validCoordinates_succeeds() throws CellNotEmptyException
+	public void insertRobots_validCoordinates_succeeds() throws CellNotEmptyException, IllegalArgumentException, SAXException, IOException, ParserConfigurationException
 	{
 		Location worldEnd = new Location(4, 4, 4);
 		World w = new World(worldEnd);
 		Location[] locations = new Location[] { new Location(1, 1, 1), new Location(2, 2, 2), new Location(1, 3, 4) };
-		List<Robot> robots = new DefiniteLocationRobotFactory(Arrays.asList(locations)).createRobots(locations.length, worldEnd);
+		List<Robot> robots = new DefiniteLocationRobotFactory(Arrays.asList(locations)).createRobots(locations.length, worldEnd, new File("test/resources/validRules.xml"));
 		w.insertRobots(robots);
 		for(Robot robot : robots)
 		{

@@ -1,7 +1,14 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * 
@@ -17,7 +24,7 @@ public class DefiniteLocationRobotFactory implements RobotFactory
 	}
 	
 	@Override
-	public List<Robot> createRobots(int numberOfRobots, Location worldEnd) throws IllegalArgumentException
+	public List<Robot> createRobots(int numberOfRobots, Location worldEnd, File rules) throws IllegalArgumentException, SAXException, IOException, ParserConfigurationException
 	{
 		if(numberOfRobots != locations.size())
 		{
@@ -26,9 +33,10 @@ public class DefiniteLocationRobotFactory implements RobotFactory
 		else
 		{
 			List<Robot> robots = new ArrayList<Robot>(numberOfRobots);
+			Collection<Rule> ruleList = Rules.parseRulesFile(new File("resources/rules.xsd"), rules);
 			for(int i = 0; i < numberOfRobots; i++)
 			{
-				robots.add(new Robot(locations.get(i)));
+				robots.add(new Robot(locations.get(i), ruleList));
 			}
 			return robots;
 		}

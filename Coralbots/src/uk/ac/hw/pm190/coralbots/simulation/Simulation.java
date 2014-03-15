@@ -1,6 +1,12 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 /**
  * 
@@ -11,13 +17,32 @@ public class Simulation
 	private final World world;
 	private final int cycles;
 	
-	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles, int corals)
+	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, File rules, int cycles, int corals)
 	{
 		world = new World(end);
 		this.cycles = cycles;
-		List<Robot> robots = robotFactory.createRobots(numberOfRobots, end);
-		world.insertCoral(corals);
-		world.insertRobots(robots);
+		List<Robot> robots;
+		try
+		{
+			robots = robotFactory.createRobots(numberOfRobots, end, rules);
+			world.insertCoral(corals);
+			world.insertRobots(robots);
+		}
+		catch(SAXException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(IOException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(ParserConfigurationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void run()

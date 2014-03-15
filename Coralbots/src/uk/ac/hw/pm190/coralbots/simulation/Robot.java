@@ -1,5 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
+import java.util.Collection;
+
 /**
  * 
  * @author Patrick Mackinder
@@ -8,11 +10,13 @@ public class Robot implements CellContent
 {
 	private Location location;
 	private CellContent contents;
+	private final Collection<Rule> rules;
 
-	public Robot(Location location)
+	public Robot(Location location, Collection<Rule> rules)
 	{
 		this.location = location;
 		contents = null;
+		this.rules = rules;
 	}
 
 	public Location getLocation()

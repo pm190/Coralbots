@@ -1,8 +1,10 @@
 package uk.ac.hw.pm190.coralbots.graphics;
 
+import java.io.File;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+
 import uk.ac.hw.pm190.coralbots.graphics.WorldImage;
 import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
 import uk.ac.hw.pm190.coralbots.simulation.DefiniteLocationRobotFactory;
@@ -17,7 +19,7 @@ public class WorldImageTest
 		Location worldEnd = new Location(50,50,50);
 		Location[] locations = new Location[] { worldStart, Location.getMiddle(worldStart, worldEnd), worldEnd};
 		DefiniteLocationRobotFactory robotFactory = new DefiniteLocationRobotFactory(Arrays.asList(locations));
-		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, 1000, 50);
+		Simulation sim = new Simulation(worldEnd, locations.length, robotFactory, new File("test/resources/validRules.xml"), 1000, 50);
 		sim.run();
 		
 		JFrame frame = new JFrame();

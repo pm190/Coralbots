@@ -11,8 +11,6 @@ import uk.ac.hw.pm190.coralbots.simulation.CellContent;
 import uk.ac.hw.pm190.coralbots.simulation.CellNotEmptyException;
 import uk.ac.hw.pm190.coralbots.simulation.Coral;
 import uk.ac.hw.pm190.coralbots.simulation.Location;
-import uk.ac.hw.pm190.coralbots.simulation.Robot;
-
 import com.tngtech.java.junit.dataprovider.DataProvider;
 import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
@@ -29,7 +27,7 @@ public class CellTest
 	{
 		Collection<Object[]> data = new ArrayList<Object[]>();
 		data.add(new CellContent[] { new Coral() });
-		data.add(new CellContent[] { new Robot(new Location(1, 1, 1)) });
+		data.add(new CellContent[] { new Rock() });
 		return data.toArray(new Object[][] {});
 	}
 
