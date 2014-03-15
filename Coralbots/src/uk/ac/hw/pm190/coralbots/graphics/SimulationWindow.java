@@ -19,6 +19,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 
 import uk.ac.hw.pm190.coralbots.simulation.Location;
 import uk.ac.hw.pm190.coralbots.simulation.RandomLocationRobotFactory;
@@ -66,6 +67,7 @@ public class SimulationWindow extends JFrame implements ItemListener
 		File rulesFolder = new File("test/resources");
 		String[] ruleFileNames = rulesFolder.list();
 		final JList<String> ruleFiles = new JList<String>(ruleFileNames);
+		ruleFiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rulePane.add(ruleFiles);
 		
 		JPanel runButtonPane = new JPanel(new BorderLayout());
