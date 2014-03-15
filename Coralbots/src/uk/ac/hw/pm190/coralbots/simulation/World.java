@@ -250,4 +250,30 @@ public class World
 	{
 		getCell(location).setReef(isReef);
 	}
+
+	public float getRating()
+	{
+		int numReef = 0;
+		int numCoral = 0;
+		Cell cell;
+		for(int z = 0; z < zLength; z++)
+		{
+			for(int y = 0; y < yLength; y++)
+			{
+				for(int x = 0; x < xLength; x++)
+				{
+					cell = cells[x][y][z];
+					if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+					{
+						numCoral++;
+						if(cell.isReef())
+						{
+							numReef++;
+						}
+					}
+				}
+			}
+		}
+		return ((float)numReef/(float)numCoral)*100;
+	}
 }
