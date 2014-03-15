@@ -1,6 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -175,6 +176,63 @@ public class World
 				}
 			}
 		}
+		attachSurroundingCoralToReef();
+	}
+	
+	private void attachSurroundingCoralToReef()
+	{
+		//TODO get initReefLocation, possible field in world class
+		Location middle = Location.getMiddle(new Location(0,0,0), end);
+		Location initialReefCell = new Location(middle.getX(), middle.getY(), 1);
+		Collection<Cell> cellRing;
+		boolean coral = true;
+		int distance = 1;
+		while(coral)
+		{
+			cellRing = getNeighbourRing(initialReefCell, distance);
+			coral = false;
+			for(Cell cell : cellRing)
+			{
+				if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+				{
+					coral = true;
+					setReefCell(cell.getLocation(), true);
+				}
+			}
+			if(coral)
+			{
+				distance++;
+			}
+		}
+	}
+	
+	private Collection<Cell> getNeighbourRing(Location loc, int distance)
+	{
+		int middleX = loc.getX();
+		int middleY = loc.getY();
+		int middleZ = loc.getZ();
+		Collection<Cell> cellRing = new ArrayList<Cell>();
+		for(int x = middleX - distance; x <= middleX + distance; x++)
+		{
+			for(int y = middleY - distance; y <= middleY + distance; y++)
+			{
+				for(int z = middleZ - distance; z <= middleZ + distance; z++)
+				{
+					if(Math.abs(z - middleZ) == distance || Math.abs(y - middleY) == distance || Math.abs(x - middleX) == distance)
+					{
+						try
+						{
+							cellRing.add(getCell(new Location(x,y,z)));
+						}
+						catch(ArrayIndexOutOfBoundsException e)
+						{
+							//Dont add cell, outside of world
+						}
+					}
+				}
+			}
+		}
+		return cellRing;
 	}
 	
 	public Cell[] getColumn(int x, int y) throws ArrayIndexOutOfBoundsException

@@ -22,7 +22,7 @@ public class ReefVisitor extends WorldAttributeVisitor
 	{
 		if(hasReef(column))
 		{
-			setColor(x, y, new Color(0, 255, 255));
+			setColor(x, y, new Color(0, 255, 0));
 		}
 		else
 		{

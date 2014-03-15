@@ -41,18 +41,6 @@ public class Rule
 	}
 
 	@Override
-	public int hashCode()
-	{
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cellToChange == null) ? 0 : cellToChange.hashCode());
-		result = prime * result + ((changeType == null) ? 0 : changeType.hashCode());
-		result = prime * result + ((lowerPattern == null) ? 0 : lowerPattern.hashCode());
-		result = prime * result + ((upperPattern == null) ? 0 : upperPattern.hashCode());
-		return result;
-	}
-
-	@Override
 	public boolean equals(Object obj)
 	{
 		if(this == obj)
@@ -81,5 +69,17 @@ public class Rule
 		else if(!upperPattern.equals(other.upperPattern))
 			return false;
 		return true;
+	}
+	
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((cellToChange == null) ? 0 : cellToChange.hashCode());
+		result = prime * result + ((changeType == null) ? 0 : changeType.hashCode());
+		result = prime * result + ((lowerPattern == null) ? 0 : lowerPattern.hashCode());
+		result = prime * result + ((upperPattern == null) ? 0 : upperPattern.hashCode());
+		return result;
 	}
 }
