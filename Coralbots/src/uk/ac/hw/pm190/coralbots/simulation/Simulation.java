@@ -11,7 +11,7 @@ public class Simulation
 	private final World world;
 	private final int cycles;
 	
-	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles, int corals) throws CellNotEmptyException
+	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, int cycles, int corals)
 	{
 		world = new World(end);
 		this.cycles = cycles;

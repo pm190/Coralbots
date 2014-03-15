@@ -74,11 +74,18 @@ public class World
 		cell.setContents(content);
 	}
 
-	public void insertRobots(List<Robot> bots) throws CellNotEmptyException
+	public void insertRobots(List<Robot> bots)
 	{
 		for(Robot robot : bots)
 		{
-			updateCell(robot.getLocation(), robot);
+			try
+			{
+				updateCell(robot.getLocation(), robot);
+			}
+			catch(CellNotEmptyException e)
+			{
+				//TODO find new place for robot
+			}
 			getCell(robot.getLocation()).incrementVisitedCount();
 			robots.add(robot);
 		}

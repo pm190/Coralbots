@@ -41,4 +41,9 @@ public class WorldImage
 	{
 		return panels;
 	}
+	
+	public World getWorld()
+	{
+		return world;
+	}
 }
