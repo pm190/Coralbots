@@ -245,7 +245,7 @@ public class WorldTest
 		Location initialCoral = new Location(middle.getX(), middle.getY(), 1);
 		for(int i = 1; i < 4; i++)
 		{
-			w.updateCell(new Location(initialCoral.getX()+i, initialCoral.getY(), initialCoral.getZ()), new Coral());
+			w.updateCell(new Location(initialCoral.getX()+i, initialCoral.getY()+i, initialCoral.getZ()+i), new Coral());
 		}
 		w.attachSurroundingCoralToReef();
 		int totalCoralInReef = 0;
