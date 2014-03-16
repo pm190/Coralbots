@@ -51,11 +51,60 @@ public class Robot implements CellContent
 		//ACT
 		if(contents == null)
 		{
-			//TODO match pattern/pickup content
+			Cell[][] cells = world.getNeighboursBelow(location);
+			Cell cell;
+			for(int x = 0; x < 3; x++)
+			{
+				for(int y = 0; y < 3; y++)
+				{
+					cell = cells[x][y];
+					if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+					{
+						try
+						{
+							contents = cell.getContents();
+							world.updateCell(cell.getLocation(), new Water());
+							return;
+						}
+						catch(CellNotEmptyException e)
+						{
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 		}
 		else
 		{
-			
+			for(Rule rule : rules)
+			{
+				if(rule.getChangeType() == contents.getCellContentType())
+				{
+					Cell[][] upperCells = world.getNeighboursBelow(location);
+					Pattern upper = new Pattern(upperCells);
+					if(rule.getUpperPattern().equals(upper));
+					{
+						Cell[][] lowerCells = world.getNeighboursBelow(upperCells[1][1].getLocation());
+						Pattern lower = new Pattern(lowerCells);
+						if(rule.getLowerPattern().equals(lower))
+						{
+							PatternCellLocation changeCellLoc = rule.getCellToChange();
+							Location changeCell = upperCells[changeCellLoc.getX()][changeCellLoc.getY()].getLocation();
+							try
+							{
+								world.updateCell(changeCell, rule.getChangeType().getCellContent());
+								return;
+							}
+							catch(CellNotEmptyException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 

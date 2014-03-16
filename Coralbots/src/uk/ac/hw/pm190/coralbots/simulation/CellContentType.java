@@ -6,8 +6,19 @@ package uk.ac.hw.pm190.coralbots.simulation;
  */
 public enum CellContentType
 {
-	WATER,
-	CORAL,
-	ROCK,
-	ROBOT;
+	WATER(new Water()),
+	CORAL(new Coral()),
+	ROCK(new Rock()),
+	ROBOT(null);
+	
+	private final CellContent cellContent;
+	CellContentType(CellContent cellContent)
+	{
+		this.cellContent = cellContent;
+	}
+	
+	CellContent getCellContent()
+	{
+		return cellContent;
+	}
 }
