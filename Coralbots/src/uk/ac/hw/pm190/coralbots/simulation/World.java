@@ -108,13 +108,13 @@ public class World
 		{
 			throw new ArrayIndexOutOfBoundsException();
 		}
-		Cell[][] neighbours = new Cell[3][3];
 		if(location.getZ() == 0)
 		{
-			return neighbours;
+			return null;
 		}
 		int z = location.getZ() - 1;
 		int i = 0, j = 0;
+		Cell[][] neighbours = new Cell[3][3];
 		for(int y = Math.max(0, location.getY() - 1); y <= Math.min(yLength - 1, location.getY() + 1); y++)
 		{
 			i = 0;

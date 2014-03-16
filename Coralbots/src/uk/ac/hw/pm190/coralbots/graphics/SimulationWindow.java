@@ -65,7 +65,12 @@ public class SimulationWindow extends JFrame implements ItemListener
 		
 		JPanel rulePane = new JPanel(new BorderLayout());
 		File rulesFolder = new File("test/resources");
-		String[] ruleFileNames = rulesFolder.list();
+		File[] files = rulesFolder.listFiles();
+		String[] ruleFileNames = new String[files.length];
+		for(int i = 0; i < files.length; i++)
+		{
+			ruleFileNames[i] = files[i].getAbsolutePath();
+		}
 		final JList<String> ruleFiles = new JList<String>(ruleFileNames);
 		ruleFiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		rulePane.add(ruleFiles);

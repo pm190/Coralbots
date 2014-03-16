@@ -37,6 +37,13 @@ public class Cell
 		throw new CellNotEmptyException();
 	}
 	
+	public CellContent pickupContents()
+	{
+		CellContent temp = contents;
+		contents = new Water();
+		return temp;
+	}
+	
 	public void departRobot()
 	{
 		if(contents.getCellContentType() == CellContentType.ROBOT)

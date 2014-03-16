@@ -52,24 +52,27 @@ public class Robot implements CellContent
 		if(contents == null)
 		{
 			Cell[][] cells = world.getNeighboursBelow(location);
-			Cell cell;
-			for(int x = 0; x < 3; x++)
+			if(cells != null)
 			{
-				for(int y = 0; y < 3; y++)
+				Cell cell;
+				for(int x = 0; x < 3; x++)
 				{
-					cell = cells[x][y];
-					if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+					for(int y = 0; y < 3; y++)
 					{
-						try
+						cell = cells[x][y];
+						if(cell != null && cell.getContents().getCellContentType() == CellContentType.CORAL)
 						{
-							contents = cell.getContents();
-							world.updateCell(cell.getLocation(), new Water());
-							return;
-						}
-						catch(CellNotEmptyException e)
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							try
+							{
+								contents = cell.pickupContents();
+								world.updateCell(cell.getLocation(), new Water());
+								return;
+							}
+							catch(CellNotEmptyException e)
+							{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
 						}
 					}
 				}
@@ -82,24 +85,50 @@ public class Robot implements CellContent
 				if(rule.getChangeType() == contents.getCellContentType())
 				{
 					Cell[][] upperCells = world.getNeighboursBelow(location);
-					Pattern upper = new Pattern(upperCells);
-					if(rule.getUpperPattern().equals(upper));
+					if(upperCells != null)
 					{
-						Cell[][] lowerCells = world.getNeighboursBelow(upperCells[1][1].getLocation());
-						Pattern lower = new Pattern(lowerCells);
-						if(rule.getLowerPattern().equals(lower))
+						for(Cell[] column : upperCells)
 						{
-							PatternCellLocation changeCellLoc = rule.getCellToChange();
-							Location changeCell = upperCells[changeCellLoc.getX()][changeCellLoc.getY()].getLocation();
-							try
+							for(Cell cell : column)
 							{
-								world.updateCell(changeCell, rule.getChangeType().getCellContent());
-								return;
+								if(cell == null)
+								{
+									return;
+								}
 							}
-							catch(CellNotEmptyException e)
+						}
+						Pattern upper = new Pattern(upperCells);
+						if(rule.getUpperPattern().equals(upper));
+						{
+							Cell[][] lowerCells = world.getNeighboursBelow(upperCells[1][1].getLocation());
+							if(lowerCells != null)
 							{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								for(Cell[] column : lowerCells)
+								{
+									for(Cell cell : column)
+									{
+										if(cell == null)
+										{
+											return;
+										}
+									}
+								}
+								Pattern lower = new Pattern(lowerCells);
+								if(rule.getLowerPattern().equals(lower))
+								{
+									PatternCellLocation changeCellLoc = rule.getCellToChange();
+									Location changeCell = upperCells[changeCellLoc.getX()][changeCellLoc.getY()].getLocation();
+									try
+									{
+										world.updateCell(changeCell, rule.getChangeType().getCellContent());
+										return;
+									}
+									catch(CellNotEmptyException e)
+									{
+										// TODO Auto-generated catch block
+										e.printStackTrace();
+									}
+								}
 							}
 						}
 					}
