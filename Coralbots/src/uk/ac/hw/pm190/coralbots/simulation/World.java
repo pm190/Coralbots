@@ -41,7 +41,7 @@ public class World
 					{
 						try
 						{
-							cells[x][y][z].setContents(new Rock());
+							cells[x][y][z].setContents(CellContentType.ROCK.getInstance());
 						}
 						catch(CellNotEmptyException e)
 						{

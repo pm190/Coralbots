@@ -17,7 +17,7 @@ public enum CellContentType
 		this.cellContent = cellContent;
 	}
 	
-	CellContent getCellContent()
+	CellContent getInstance()
 	{
 		return cellContent;
 	}

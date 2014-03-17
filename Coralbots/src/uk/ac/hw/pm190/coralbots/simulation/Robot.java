@@ -120,7 +120,7 @@ public class Robot implements CellContent
 									Location changeCell = upperCells[changeCellLoc.getX()][changeCellLoc.getY()].getLocation();
 									try
 									{
-										world.updateCell(changeCell, rule.getChangeType().getCellContent());
+										world.updateCell(changeCell, rule.getChangeType().getInstance());
 										return;
 									}
 									catch(CellNotEmptyException e)

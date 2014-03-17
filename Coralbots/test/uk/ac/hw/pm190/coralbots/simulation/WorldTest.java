@@ -123,44 +123,47 @@ public class WorldTest
 	{
 		World w = new World(end);
 		Cell[][] neighbours = w.getNeighboursBelow(cellLocation);
+		Set<Cell> neighboursSet = new HashSet<Cell>(9);
 		int totalNeighbours = 0;
-		for(int y = 0; y < 3; y++)
+		if(neighbours != null)
 		{
-			for(int x = 0; x < 3; x++)
+			for(int y = 0; y < 3; y++)
 			{
-				if(neighbours[y][x] != null)
+				for(int x = 0; x < 3; x++)
 				{
-					totalNeighbours++;
+					if(neighbours[y][x] != null)
+					{
+						totalNeighbours++;
+					}
+				}
+			}
+			
+			for(int y = 0; y < 3; y++)
+			{
+				for(int x = 0; x < 3; x++)
+				{
+					if(neighbours[y][x] != null)
+					{
+						neighboursSet.add(neighbours[y][x]);
+					}
+				}
+			}
+			
+			for(int y = 0; y < 3; y++)
+			{
+				for(int x = 0; x < 3; x++)
+				{
+					if(neighbours[y][x] != null)
+					{
+						assertTrue("X coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getX() - cellLocation.getX()) <= 1);
+						assertTrue("Y coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getY() - cellLocation.getY()) <= 1);
+						assertEquals("Z coordinate", cellLocation.getZ() - 1, neighbours[y][x].getLocation().getZ());
+					}
 				}
 			}
 		}
 		assertEquals("Number of neighbours", expectedNumberOfNeighbours, totalNeighbours);
-
-		Set<Cell> neighboursSet = new HashSet<Cell>(9);
-		for(int y = 0; y < 3; y++)
-		{
-			for(int x = 0; x < 3; x++)
-			{
-				if(neighbours[y][x] != null)
-				{
-					neighboursSet.add(neighbours[y][x]);
-				}
-			}
-		}
 		assertEquals("Number of unique neighbours", expectedNumberOfNeighbours, neighboursSet.size());
-
-		for(int y = 0; y < 3; y++)
-		{
-			for(int x = 0; x < 3; x++)
-			{
-				if(neighbours[y][x] != null)
-				{
-					assertTrue("X coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getX() - cellLocation.getX()) <= 1);
-					assertTrue("Y coordinate difference <= 1", Math.abs(neighbours[y][x].getLocation().getY() - cellLocation.getY()) <= 1);
-					assertEquals("Z coordinate", cellLocation.getZ() - 1, neighbours[y][x].getLocation().getZ());
-				}
-			}
-		}
 	}
 
 	@Test

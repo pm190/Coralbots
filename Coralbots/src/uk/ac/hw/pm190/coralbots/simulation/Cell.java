@@ -14,7 +14,7 @@ public class Cell
 	public Cell(Location location)
 	{
 		this.location = location;
-		this.contents = new Water();
+		this.contents = CellContentType.WATER.getInstance();
 	}
 
 	public Location getLocation()
