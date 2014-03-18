@@ -62,17 +62,8 @@ public class Robot implements CellContent
 						cell = cells[x][y];
 						if(cell != null && cell.getContents().getCellContentType() == CellContentType.CORAL)
 						{
-							try
-							{
-								contents = cell.pickupContents();
-								world.updateCell(cell.getLocation(), new Water());
-								return;
-							}
-							catch(CellNotEmptyException e)
-							{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							contents = cell.pickupContents();
+							return;
 						}
 					}
 				}
@@ -80,59 +71,21 @@ public class Robot implements CellContent
 		}
 		else
 		{
-			for(Rule rule : rules)
+			try 
 			{
-				if(rule.getChangeType() == contents.getCellContentType())
+				for(Rule rule : rules)
 				{
-					Cell[][] upperCells = world.getNeighboursBelow(location);
-					if(upperCells != null)
+					RuleMatcher ruleMatcher = new RuleMatcher(world, new Location(location, 0, 0, -1), rule);
+					if(ruleMatcher.matches())
 					{
-						for(Cell[] column : upperCells)
-						{
-							for(Cell cell : column)
-							{
-								if(cell == null)
-								{
-									return;
-								}
-							}
-						}
-						Pattern upper = new Pattern(upperCells);
-						if(rule.getUpperPattern().equals(upper));
-						{
-							Cell[][] lowerCells = world.getNeighboursBelow(upperCells[1][1].getLocation());
-							if(lowerCells != null)
-							{
-								for(Cell[] column : lowerCells)
-								{
-									for(Cell cell : column)
-									{
-										if(cell == null)
-										{
-											return;
-										}
-									}
-								}
-								Pattern lower = new Pattern(lowerCells);
-								if(rule.getLowerPattern().equals(lower))
-								{
-									PatternCellLocation changeCellLoc = rule.getCellToChange();
-									Location changeCell = upperCells[changeCellLoc.getX()][changeCellLoc.getY()].getLocation();
-									try
-									{
-										world.updateCell(changeCell, rule.getChangeType().getInstance());
-										return;
-									}
-									catch(CellNotEmptyException e)
-									{
-										// TODO Auto-generated catch block
-										e.printStackTrace();
-									}
-								}
-							}
-						}
+						world.updateCell(ruleMatcher.getActionCellLocation(), rule.getChangeType().getInstance());
 					}
 				}
+			} 
+			catch (CellNotEmptyException e) 
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

@@ -16,6 +16,20 @@ public class Location
 		this.y = y;
 		this.z = z;
 	}
+	
+	/**
+	 * Create location relative to another location
+	 * @param location
+	 * @param x offset
+	 * @param y offset
+	 * @param z pffset
+	 */
+	public Location(Location location, int x, int y, int z)
+	{
+		this.x = location.x + x;
+		this.y = location.y + y;
+		this.z = location.z + z;
+	}
 
 	public int getX()
 	{
