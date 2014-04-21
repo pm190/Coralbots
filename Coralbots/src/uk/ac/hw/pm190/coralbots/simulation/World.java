@@ -56,8 +56,8 @@ public class World
 		{
 			Location middle = Location.getMiddle(new Location(0,0,0), end);
 			Location initialReefCell = new Location(middle.getX(), middle.getY(), 1);
-			updateCell(initialReefCell, new Coral());
-			setReefCell(initialReefCell, true);
+			updateCell(initialReefCell, CellContentType.CORAL.getInstance());
+			setInitialReefCell(initialReefCell);
 		}
 		catch(ArrayIndexOutOfBoundsException | CellNotEmptyException e)
 		{
@@ -139,9 +139,7 @@ public class World
 	}
 
 	/**
-	 * Insert number of coral blocks into simulation. Note that the number of coral
-	 * will be 1 greater than value specified in numCorals due to world inserting
-	 * a coral block at world centre during construction
+	 * Insert number of coral blocks into simulation.
 	 * 
 	 * @param numCorals
 	 * @throws IllegalArgumentException
@@ -171,7 +169,7 @@ public class World
 				{
 					try
 					{
-						updateCell(new Location(rx, ry, rz), new Coral());
+						updateCell(new Location(rx, ry, rz), CellContentType.CORAL.getInstance());
 						break;
 					}
 					catch(CellNotEmptyException e)
@@ -185,19 +183,26 @@ public class World
 				}
 			}
 		}
-		attachSurroundingCoralToReef();
-	}
-	
-	public void attachSurroundingCoralToReef()
-	{
 		//TODO get initReefLocation, possible field in world class
 		Location middle = Location.getMiddle(new Location(0,0,0), end);
 		Location initialReefLocation = new Location(middle.getX(), middle.getY(), 1);
+		attachSurroundingCoralToReef(initialReefLocation, true);
+	}
+	
+	public void attachSurroundingCoralToReef(Location location, boolean isInititalReef)
+	{
 		Set<Cell> reef = new HashSet<Cell>();
-		setReef(reef, getNeighbours(initialReefLocation));
+		setReef(reef, getNeighbours(location));
 		for(Cell cell : reef)
 		{
-			setReefCell(cell.getLocation(), true);
+			if(isInititalReef)
+			{
+				setInitialReefCell(cell.getLocation());
+			}
+			else
+			{
+				setReefCell(cell.getLocation(), true);
+			}
 		}
 	}
 	
@@ -205,7 +210,7 @@ public class World
 	{
 		for(Cell cell : cells)
 		{
-			if(cell.getContents().getCellContentType() == CellContentType.CORAL)
+			if(!cell.isReef() && cell.getContents().getCellContentType() == CellContentType.CORAL)
 			{
 				if(reef.add(cell))
 				{
@@ -229,17 +234,17 @@ public class World
 			{
 				for(int z = middleZ - 1; z <= middleZ + 1; z++)
 				{
-					neighbour = getCell(new Location(x, y, z));
-					if(cell != neighbour)
+					try
 					{
-						try
+						neighbour = getCell(new Location(x, y, z));
+						if(cell != neighbour)
 						{
 							neighbours.add(getCell(new Location(x,y,z)));
 						}
-						catch(ArrayIndexOutOfBoundsException e)
-						{
-							//Dont add cell, outside of world
-						}
+					}
+					catch(ArrayIndexOutOfBoundsException e)
+					{
+						//Dont add cell, outside of world
 					}
 				}
 			}
@@ -261,6 +266,12 @@ public class World
 	public void setReefCell(Location location, boolean isReef)
 	{
 		getCell(location).setReef(isReef);
+	}
+	
+	private void setInitialReefCell(Location location)
+	{
+		getCell(location).setInitialReef(true);
+		getCell(location).setReef(true);
 	}
 
 	public float getRating()
@@ -286,6 +297,13 @@ public class World
 				}
 			}
 		}
-		return ((float)numReef/(float)numCoral)*100;
+		for(Robot robot : robots)
+		{
+			if(robot.getContents() != null && robot.getContents().getCellContentType() == CellContentType.CORAL)
+			{
+				numCoral++;
+			}
+		}
+		return ((float)numReef/(float)numCoral)*100.0f;
 	}
 }

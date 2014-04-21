@@ -20,7 +20,12 @@ public class ReefVisitor extends WorldAttributeVisitor
 	@Override
 	public void visit(int x, int y, Cell[] column)
 	{
-		if(hasReef(column))
+		CoralStatus cs = hasReef(column);
+		if(cs.isReef() && cs.isInitialReef())
+		{
+			setColor(x, y, new Color(0, 255, 255));
+		}
+		else if(cs.isReef())
 		{
 			setColor(x, y, new Color(0, 255, 0));
 		}
@@ -30,15 +35,47 @@ public class ReefVisitor extends WorldAttributeVisitor
 		}
 	}
 	
-	private boolean hasReef(Cell[] column)
+	private CoralStatus hasReef(Cell[] column)
 	{
-		for(int z = 0; z < column.length; z++)
+		for(int z = column.length-1; z >= 0; z--)
 		{
 			if(column[z].isReef())
 			{
-				return true;
+				if(column[z].isInitialReef())
+				{
+					return new CoralStatus(true, true);
+				}
+				return new CoralStatus(true, false);
 			}
 		}
-		return false;
+		return new CoralStatus(false, false);
+	}
+}
+
+final class CoralStatus
+{
+	private final boolean isReef;
+	private final boolean isInitialReef;
+	
+	public CoralStatus(boolean isReef, boolean isInitialReef)
+	{
+		this.isReef = isReef;
+		this.isInitialReef = isInitialReef;
+	}
+
+	/**
+	 * @return the isReef
+	 */
+	public boolean isReef() 
+	{
+		return isReef;
+	}
+
+	/**
+	 * @return the isInitialReef
+	 */
+	public boolean isInitialReef() 
+	{
+		return isInitialReef;
 	}
 }

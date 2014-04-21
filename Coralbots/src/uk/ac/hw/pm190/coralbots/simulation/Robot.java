@@ -60,7 +60,7 @@ public class Robot implements CellContent
 					for(int y = 0; y < 3; y++)
 					{
 						cell = cells[x][y];
-						if(cell != null && cell.getContents().getCellContentType() == CellContentType.CORAL)
+						if(cell != null && !cell.isReef() && cell.getContents().getCellContentType() == CellContentType.CORAL)
 						{
 							contents = cell.pickupContents();
 							return;
@@ -79,6 +79,9 @@ public class Robot implements CellContent
 					if(ruleMatcher.matches())
 					{
 						world.updateCell(ruleMatcher.getActionCellLocation(), rule.getChangeType().getInstance());
+						world.getCell(ruleMatcher.getActionCellLocation()).setReef(true);
+						world.attachSurroundingCoralToReef(ruleMatcher.getActionCellLocation(), false);
+						contents = null;
 					}
 				}
 			} 
@@ -94,5 +97,10 @@ public class Robot implements CellContent
 	public CellContentType getCellContentType()
 	{
 		return CellContentType.ROBOT;
+	}
+	
+	public CellContent getContents()
+	{
+		return contents;
 	}
 }

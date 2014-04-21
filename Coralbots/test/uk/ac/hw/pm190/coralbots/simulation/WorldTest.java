@@ -255,7 +255,7 @@ public class WorldTest
 		{
 			w.updateCell(new Location(initialCoral.getX()+i, initialCoral.getY()+i, initialCoral.getZ()+i), new Coral());
 		}
-		w.attachSurroundingCoralToReef();
+		w.attachSurroundingCoralToReef(initialCoral, true);
 		int totalCoralInReef = 0;
 		for(int x = 0; x <= end.getX(); x++)
 		{

@@ -21,7 +21,9 @@ public class RuleMatcher
 		boolean matched = false;
 		for(Rotation rotation : Rotation.values())
 		{
-			if(new PatternMatcher(world, location, r.getUpperPattern(), rotation).matches() && new PatternMatcher(world, new Location(location, 0, 0, -1), r.getLowerPattern(), rotation).matches())
+			PatternMatcher upperMatcher = new PatternMatcher(world, location, r.getUpperPattern(), rotation);
+			PatternMatcher lowerMatcher = new PatternMatcher(world, new Location(location, 0, 0, -1), r.getLowerPattern(), rotation);
+			if(upperMatcher.matches() && lowerMatcher.matches() && (upperMatcher.isPartOfReef() || lowerMatcher.isPartOfReef()))
 			{
 				matchedRotation = rotation;
 				matched = true;

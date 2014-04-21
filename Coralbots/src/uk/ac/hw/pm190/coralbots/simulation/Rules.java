@@ -21,6 +21,22 @@ import org.xml.sax.SAXException;
 
 public class Rules
 {
+	public static boolean isValid(File rulesSchema, File rulesSource)
+	{
+		try 
+		{
+			SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+			Schema schema = factory.newSchema(new StreamSource(rulesSchema));
+			Validator validator = schema.newValidator();
+			validator.validate(new StreamSource(rulesSource));
+		} 
+		catch (SAXException | IOException e) 
+		{
+			return false;
+		}
+		return true;
+	}
+	
 	public static Collection<Rule> parseRulesFile(File rulesSchema, File rulesSource) throws SAXException, IOException, ParserConfigurationException
 	{
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);

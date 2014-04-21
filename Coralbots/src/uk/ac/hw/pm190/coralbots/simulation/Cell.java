@@ -10,6 +10,7 @@ public class Cell
 	private CellContent contents;
 	private int visitedCount;
 	private boolean isReef;
+	private boolean initialReef;
 
 	public Cell(Location location)
 	{
@@ -40,7 +41,7 @@ public class Cell
 	public CellContent pickupContents()
 	{
 		CellContent temp = contents;
-		contents = new Water();
+		contents = CellContentType.WATER.getInstance();
 		return temp;
 	}
 	
@@ -70,5 +71,21 @@ public class Cell
 	public void setReef(boolean isReef)
 	{
 		this.isReef = isReef;
+	}
+
+	/**
+	 * @return the initialReef
+	 */
+	public boolean isInitialReef() 
+	{
+		return initialReef;
+	}
+
+	/**
+	 * @param initialReef the initialReef to set
+	 */
+	public void setInitialReef(boolean initialReef) 
+	{
+		this.initialReef = initialReef;
 	}
 }

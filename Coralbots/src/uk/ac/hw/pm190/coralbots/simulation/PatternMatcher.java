@@ -7,10 +7,12 @@ package uk.ac.hw.pm190.coralbots.simulation;
 public class PatternMatcher
 {
 	private final boolean patternMatched;
-	
+	private final boolean partOfReef;
+
 	public PatternMatcher(World world, Location location, Pattern pattern, Rotation rotation) 
 	{
 		boolean matched = true;
+		boolean reef = false;
 		for(int x = -1; x <= 1; x++)
 		{
 			for(int y = -1; y <= 1; y++)
@@ -22,6 +24,10 @@ public class PatternMatcher
 					{
 						matched = false;
 					}
+					if(world.getCell(loc).isReef())
+					{
+						reef = true;
+					}
 				}
 				catch(ArrayIndexOutOfBoundsException e)
 				{
@@ -30,9 +36,19 @@ public class PatternMatcher
 			}
 		}
 		patternMatched = matched;
+		partOfReef = reef;
 	}
 
-	public boolean matches() {
+	public boolean matches() 
+	{
 		return patternMatched;
+	}
+
+	/**
+	 * @return the partOfReef
+	 */
+	public boolean isPartOfReef() 
+	{
+		return partOfReef;
 	}
 }

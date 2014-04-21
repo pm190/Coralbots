@@ -26,6 +26,8 @@ public class Simulation
 		{
 			robots = robotFactory.createRobots(numberOfRobots, end, rules);
 			world.insertCoral(corals);
+			float result = world.getRating();
+			System.out.print(String.format("%.2f\t", result));
 			world.insertRobots(robots);
 		}
 		catch(SAXException e)
