@@ -50,7 +50,6 @@ public class SimulationResultsPanel extends JPanel implements ItemListener
         JTextField score = new JTextField();
         score.setEditable(false);
         float result = worldImage.getWorld().getRating();
-		System.out.println(String.format("%.2f", result));
         score.setText(String.format("Score: %.2f%%", result));
         
         topPane.add(score);
