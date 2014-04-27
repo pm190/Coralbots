@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
 public class CoralbotsApplicationWindow extends JFrame
 {
@@ -68,6 +70,16 @@ public class CoralbotsApplicationWindow extends JFrame
 		buttonPanel.add(help);
 		buttonPanel.add(Box.createHorizontalGlue());
 		buttonPanel.add(start);
+		
+		JPanel textPanel = new JPanel();
+		JTextArea text = new JTextArea();
+		text.setEditable(false);
+		text.setText("Welcome to the Coralbots Simulation Manager\n"
+				+ "To begin click Start, or for help click Help");
+		textPanel.add(Box.createGlue());
+		textPanel.add(text);
+		textPanel.add(Box.createGlue());
+		startPanel.add(textPanel, BorderLayout.CENTER);
 		startPanel.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	
@@ -87,6 +99,25 @@ public class CoralbotsApplicationWindow extends JFrame
 		buttonPanel.add(back);
 		buttonPanel.add(Box.createHorizontalGlue());
 		
+		JPanel textPanel = new JPanel();
+		JTextArea text = new JTextArea();
+		text.setEditable(false);
+		text.setText("To create a simulation you must supply the following parameters:\n"
+				+ "\tWorld End Coordinates:\n"
+				+ "\t\tThree dimensional coordinates that represent the world end.\n"
+				+ "\t\tThe minimum coordinates are (9,9,9)\n"
+				+ "\tNumber of Coralbots:\n"
+				+ "\t\tThe number of coralbots in the simulation\n"
+				+ "\tSimulation Cycles:\n"
+				+ "\t\tThe number of cycles to run the simulation over\n"
+				+ "\tAmount of Coral:\n"
+				+ "\t\tThe number of coral blocks to be placed into the simulation randomly\n"
+				+ "\tRules File\n"
+				+ "\t\tThe file containing the selected rules for use by the coralbots");
+		textPanel.add(Box.createGlue());
+		textPanel.add(text);
+		textPanel.add(Box.createGlue());
+		helpPanel.add(textPanel, BorderLayout.CENTER);
 		helpPanel.add(buttonPanel, BorderLayout.SOUTH);
 	}
 	

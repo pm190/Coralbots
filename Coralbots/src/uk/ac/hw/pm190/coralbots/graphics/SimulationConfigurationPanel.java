@@ -48,7 +48,7 @@ public class SimulationConfigurationPanel extends JPanel
 		JPanel simOpts = new JPanel(new GridLayout(2,8));
 		simOpts.add(new JLabel("End Loc:"));
 		simOpts.add(endLocation);
-		simOpts.add(new JLabel("Robots:"));
+		simOpts.add(new JLabel("Coralbots:"));
 		simOpts.add(robots);
 		simOpts.add(new JLabel("Cycles:"));
 		simOpts.add(cycles);
