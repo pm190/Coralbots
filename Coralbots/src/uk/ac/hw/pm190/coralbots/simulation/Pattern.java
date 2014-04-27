@@ -8,6 +8,18 @@ public class Pattern
 {
 	private final CellContentType[][] pattern;
 	
+	public Pattern()
+	{
+		pattern = new CellContentType[3][3];
+		for(int x = 0; x < 3; x++)
+		{
+			for(int y = 0; y < 3; y++)
+			{
+				pattern[x][y] = CellContentType.WATER;
+			}
+		}
+	}
+	
 	public Pattern(CellContentType[][] pattern)
 	{
 		this.pattern = pattern;

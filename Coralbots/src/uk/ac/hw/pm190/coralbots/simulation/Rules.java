@@ -4,11 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
@@ -90,5 +96,79 @@ public class Rules
 			rules.add(new Rule(upperPattern, lowerPattern, location, content));
 		}
 		return rules;
+	}
+	
+	public static void writeRules(File rulesSchema, File rulesSource, Collection<Rule> rules)
+	{
+		try
+		{
+			DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+			Document doc = docBuilder.newDocument();
+			Element rootElement = doc.createElement("rules");
+			doc.appendChild(rootElement);
+			for(Rule r : rules)
+			{
+				Element rule = doc.createElement("rule");
+				Element pattern = doc.createElement("pattern");
+				Element upper = doc.createElement("upper");
+				Element lower = doc.createElement("lower");
+				Element change = doc.createElement("change");
+				Element cell = doc.createElement("cell");
+				Element type = doc.createElement("type");
+				
+				createPattern(doc, upper, r.getUpperPattern());
+				createPattern(doc, lower, r.getLowerPattern());
+				
+				pattern.appendChild(upper);
+				pattern.appendChild(lower);
+				
+				cell.appendChild(doc.createTextNode(r.getCellToChange().toString()));
+				type.appendChild(doc.createTextNode(r.getChangeType().toString()));
+				
+				change.appendChild(cell);
+				change.appendChild(type);
+				
+				rule.appendChild(pattern);
+				rule.appendChild(change);
+				
+				rootElement.appendChild(rule);
+			}
+			TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			Transformer transformer = transformerFactory.newTransformer();
+			DOMSource source = new DOMSource(doc);
+			StreamResult result = new StreamResult(rulesSource);
+			transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
+			transformer.transform(source, result);
+			if(!isValid(new File("resources/rules.xsd"), rulesSource))
+			{
+				//TODO some error message, should never happen
+			}
+		}
+		catch(ParserConfigurationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(TransformerConfigurationException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		catch(TransformerException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	private static void createPattern(Document doc, Element element, Pattern pattern)
+	{
+		for(PatternCellLocation loc : PatternCellLocation.values())
+		{
+			Element location = doc.createElement(loc.toString());
+			location.appendChild(doc.createTextNode(pattern.getCellContentType(new XYPair(loc.getX()+1, loc.getY()+1)).toString()));
+			element.appendChild(location);
+		}
 	}
 }

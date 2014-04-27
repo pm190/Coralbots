@@ -19,6 +19,14 @@ public class Rule
 		this.cellToChange = cellToChange;
 		this.changeType = changeType;
 	}
+	
+	public Rule()
+	{
+		upperPattern = new Pattern();
+		lowerPattern = new Pattern();
+		cellToChange = PatternCellLocation.TOPLEFT;
+		changeType = CellContentType.WATER;
+	}
 
 	public Pattern getUpperPattern()
 	{
@@ -35,6 +43,11 @@ public class Rule
 		return changeType;
 	}
 	
+	public PatternCellLocation getCellToChange()
+	{
+		return cellToChange;
+	}
+
 	public XYPair getActionCellXYPair() 
 	{
 		return new XYPair(cellToChange.getX(), cellToChange.getY()); 
