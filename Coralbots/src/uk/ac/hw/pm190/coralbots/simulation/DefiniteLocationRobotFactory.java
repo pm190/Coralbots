@@ -11,18 +11,25 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * Robot factory that creates robots at specific locations.
  * @author Patrick Mackinder
  */
 public class DefiniteLocationRobotFactory implements RobotFactory
 {
 	private final List<Location> locations;
 	
+	/**
+	 * Define list of location to create robots at
+	 * @param locations
+	 */
 	public DefiniteLocationRobotFactory(List<Location> locations)
 	{
 		this.locations = locations;
 	}
 	
+	/**
+	 * Create robots at desired location, returns robot list
+	 */
 	@Override
 	public List<Robot> createRobots(int numberOfRobots, Location worldEnd, File rules) throws IllegalArgumentException, SAXException, IOException, ParserConfigurationException
 	{

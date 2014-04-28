@@ -23,12 +23,16 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 /**
- * 
+ * RandomLocationRobotFactory test cases
  * @author Patrick Mackinder
  */
 @RunWith(DataProviderRunner.class)
 public class RandomLocationRobotFactoryTest
 {
+	/**
+	 * Generate array of worldEnds and numbers of robots to create
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] validRobotNumbersAndWorldEnds()
 	{
@@ -40,6 +44,14 @@ public class RandomLocationRobotFactoryTest
 		return data.toArray(new Object[][] {});
 	}
 	
+	/**
+	 * Test to see if correct numbers are created for different sized worlds
+	 * @param worldEnd
+	 * @param robotNumber
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
 	@Test
 	@UseDataProvider("validRobotNumbersAndWorldEnds")
 	public void createRobots_validNumber_suceeds(Location worldEnd, int robotNumber) throws SAXException, IOException, ParserConfigurationException
@@ -49,6 +61,14 @@ public class RandomLocationRobotFactoryTest
 		assertEquals(robots.size(), robotNumber);
 	}
 
+	/**
+	 * Test to see if robots are generated in different locations from each other
+	 * @param worldEnd
+	 * @param robotNumber
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
 	@Test
 	@UseDataProvider("validRobotNumbersAndWorldEnds")
 	public void createRubots_validNumber_differentLocations_succeeds(Location worldEnd, int robotNumber) throws SAXException, IOException, ParserConfigurationException

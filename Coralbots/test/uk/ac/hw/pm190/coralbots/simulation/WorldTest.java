@@ -29,7 +29,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 /**
- * 
+ * Test cases for World class
  * @author Patrick Mackinder
  */
 @RunWith(DataProviderRunner.class)
@@ -37,6 +37,10 @@ public class WorldTest
 {
 	private static final Location[] worldEnds = new Location[] { new Location(4, 4, 4), new Location(9, 9, 9), new Location(9, 4, 4), new Location(4, 9, 4), new Location(4, 4, 9) };
 
+	/**
+	 * Generate array of valid coordinates
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] validCoordinates()
 	{
@@ -51,6 +55,10 @@ public class WorldTest
 		return data.toArray(new Object[][] {});
 	}
 
+	/**
+	 * Generate array of invalid coordinates
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] invalidCoordinates()
 	{
@@ -67,6 +75,10 @@ public class WorldTest
 		return data.toArray(new Object[][] {});
 	}
 
+	/**
+	 * Generate array of neighbour below coordinates
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] neighboursBelowForValidCoordinates()
 	{
@@ -105,6 +117,10 @@ public class WorldTest
 		return data.toArray(new Object[][] {});
 	}
 
+	/**
+	 * Generate array of invlaid world end coordinates
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] invalidWorldEndCooridnates()
 	{
@@ -117,6 +133,12 @@ public class WorldTest
 		return data.toArray(new Object[][] {});
 	}
 
+	/**
+	 * Test for valid neighbours below
+	 * @param end
+	 * @param cellLocation
+	 * @param expectedNumberOfNeighbours
+	 */
 	@Test
 	@UseDataProvider("neighboursBelowForValidCoordinates")
 	public void getNeighboursBelow_validCoordinates_succeeds(Location end, Location cellLocation, int expectedNumberOfNeighbours)
@@ -166,6 +188,11 @@ public class WorldTest
 		assertEquals("Number of unique neighbours", expectedNumberOfNeighbours, neighboursSet.size());
 	}
 
+	/**
+	 * Test if worlds are created that contain valid coordinate
+	 * @param end
+	 * @param cellLocation
+	 */
 	@Test
 	@UseDataProvider("validCoordinates")
 	public void getCell_validCoordinates_succeeds(Location end, Location cellLocation)
@@ -175,6 +202,11 @@ public class WorldTest
 		assertEquals("Cell coordinates", cellLocation, c.getLocation());
 	}
 
+	/**
+	 * Test to see location is out of world bounds
+	 * @param end
+	 * @param cellLocation
+	 */
 	@Test(expected = ArrayIndexOutOfBoundsException.class)
 	@UseDataProvider("invalidCoordinates")
 	public void getCell_invalidCoordinates_throwsException(Location end, Location cellLocation)
@@ -183,6 +215,10 @@ public class WorldTest
 		w.getCell(cellLocation);
 	}
 
+	/**
+	 * Test to see if world can be created with invalid coordinates
+	 * @param end
+	 */
 	@Test(expected = IllegalArgumentException.class)
 	@UseDataProvider("invalidWorldEndCooridnates")
 	public void createWorld_invalidCoordinates_throwsException(Location end)
@@ -191,6 +227,14 @@ public class WorldTest
 		World w = new World(end);
 	}
 
+	/**
+	 * Test to see if robots are correctly inserted
+	 * @throws CellNotEmptyException
+	 * @throws IllegalArgumentException
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
 	@Test
 	public void insertRobots_validCoordinates_succeeds() throws CellNotEmptyException, IllegalArgumentException, SAXException, IOException, ParserConfigurationException
 	{
@@ -205,6 +249,9 @@ public class WorldTest
 		}
 	}
 	
+	/**
+	 * Test to see if correct number of coral is inserted
+	 */
 	@Test
 	public void insertCorals_succeeds()
 	{
@@ -234,6 +281,9 @@ public class WorldTest
 		assertEquals("Number of coral", numCoral, total);
 	}
 	
+	/**
+	 * Test to see if initial coral piece is correctly places
+	 */
 	@Test
 	public void middleBottomCellAlwaysCoral_succeeds()
 	{
@@ -244,6 +294,11 @@ public class WorldTest
 		assertEquals("Middle bottom cell above rock layer is coral", CellContentType.CORAL, cc);
 	}
 	
+	/**
+	 * Test to see if initial coral reef is set correctly
+	 * @throws ArrayIndexOutOfBoundsException
+	 * @throws CellNotEmptyException
+	 */
 	@Test
 	public void initialReef_succeeds() throws ArrayIndexOutOfBoundsException, CellNotEmptyException
 	{

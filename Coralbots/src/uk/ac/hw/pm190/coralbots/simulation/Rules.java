@@ -25,8 +25,18 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+/**
+ * Rule class handles rule file parsing. It also allows for rule file writing.
+ * @author pm190
+ */
 public class Rules
 {
+	/**
+	 * Checks to see if rule file is valid against the schema
+	 * @param rulesSchema
+	 * @param rulesSource
+	 * @return
+	 */
 	public static boolean isValid(File rulesSchema, File rulesSource)
 	{
 		try 
@@ -43,6 +53,15 @@ public class Rules
 		return true;
 	}
 	
+	/**
+	 * Parses rule file and returns collections of Rule objects
+	 * @param rulesSchema
+	 * @param rulesSource
+	 * @return
+	 * @throws SAXException
+	 * @throws IOException
+	 * @throws ParserConfigurationException
+	 */
 	public static Collection<Rule> parseRulesFile(File rulesSchema, File rulesSource) throws SAXException, IOException, ParserConfigurationException
 	{
 		SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
@@ -98,6 +117,12 @@ public class Rules
 		return rules;
 	}
 	
+	/**
+	 * Writes rule file given collection of Rule objects, verifies the new file against schema
+	 * @param rulesSchema
+	 * @param rulesSource
+	 * @param rules
+	 */
 	public static void writeRules(File rulesSchema, File rulesSource, Collection<Rule> rules)
 	{
 		try

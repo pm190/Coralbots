@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * CellContentType enumeration, with convenience name and instance
  * @author Patrick Mackinder
  */
 public enum CellContentType

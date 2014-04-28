@@ -3,13 +3,19 @@ package uk.ac.hw.pm190.coralbots.simulation;
 import java.util.Random;
 
 /**
- * 
+ * Represents 3D coordinate
  * @author Patrick Mackinder
  */
 public class Location
 {
 	private final int x, y, z;
 
+	/**
+	 * Create location at coordinate (x,y,z)
+	 * @param x
+	 * @param y
+	 * @param z
+	 */
 	public Location(int x, int y, int z)
 	{
 		this.x = x;
@@ -76,6 +82,11 @@ public class Location
 		return true;
 	}
 
+	/**
+	 * Convenience method to check if two cells are contiguous
+	 * @param other
+	 * @return
+	 */
 	public boolean isNeighbour(Location other)
 	{
 		if((Math.abs(other.getX() - this.getX()) <= 1) && (Math.abs(other.getY() - this.getY()) <= 1) && (Math.abs(other.getZ() - this.getZ()) <= 1))
@@ -85,17 +96,34 @@ public class Location
 		return false;
 	}
 
+	/**
+	 * Return location that is half way between two locations
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static Location getMiddle(Location a, Location b)
 	{
 		return new Location(Math.abs((b.getX() - a.getX()) / 2), Math.abs((b.getY() - a.getY()) / 2), Math.abs((b.getZ() - a.getZ()) / 2));
 	}
 
+	/**
+	 * Get random location up to specified max
+	 * @param end
+	 * @return
+	 */
 	public static Location randomLocation(Location end)
 	{
 		Random random = new Random();
 		return new Location(random.nextInt(end.getX() + 1), random.nextInt(end.getY() + 1), random.nextInt(end.getZ() + 1));
 	}
 
+	/**
+	 * Get random location up two specified max within given distance
+	 * @param end
+	 * @param distance
+	 * @return
+	 */
 	public Location randomLocation(Location end, int distance)
 	{
 		Random random = new Random();

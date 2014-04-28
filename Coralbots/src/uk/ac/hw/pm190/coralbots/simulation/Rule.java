@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Represents a mirco rule, contains upper and lower pattern along with change cell location and change cell type.
  * @author Patrick Mackinder
  */
 public class Rule
@@ -11,6 +11,13 @@ public class Rule
 	private final PatternCellLocation cellToChange;
 	private final CellContentType changeType;
 	
+	/**
+	 * Create rule with 2 patterns, and cell modification details
+	 * @param upperPattern
+	 * @param lowerPattern
+	 * @param cellToChange
+	 * @param changeType
+	 */
 	public Rule(Pattern upperPattern, Pattern lowerPattern, PatternCellLocation cellToChange, CellContentType changeType)
 	{
 		//TODO validate rules, valid/could be valid (runtime)/invalid
@@ -20,6 +27,9 @@ public class Rule
 		this.changeType = changeType;
 	}
 	
+	/**
+	 * Create empty rule containing two empty patterns and placeholder cell modification details
+	 */
 	public Rule()
 	{
 		upperPattern = new Pattern();

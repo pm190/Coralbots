@@ -7,12 +7,14 @@ import org.junit.Test;
 import uk.ac.hw.pm190.coralbots.simulation.Pattern;
 
 /**
- * 
+ * Pattern Test cases
  * @author Patrick Mackinder
  */
 public class PatternTest
 {
-
+	/**
+	 * Test that equal patterns match
+	 */
 	@Test
 	public void patternMatches_succeeds()
 	{
@@ -22,6 +24,9 @@ public class PatternTest
 		assertTrue("Pattern matches", p1.equals(p2));
 	}
 	
+	/**
+	 * Test that inequal patterns do not match
+	 */
 	@Test
 	public void patternMatches_fails()
 	{

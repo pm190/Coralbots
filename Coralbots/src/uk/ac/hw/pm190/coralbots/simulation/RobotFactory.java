@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * Interface for Robot factory
  * @author Patrick Mackinder
  */
 public interface RobotFactory

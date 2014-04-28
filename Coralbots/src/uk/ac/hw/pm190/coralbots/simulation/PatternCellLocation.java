@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Enumeration of relative cell locations
  * @author Patrick Mackinder
  */
 public enum PatternCellLocation

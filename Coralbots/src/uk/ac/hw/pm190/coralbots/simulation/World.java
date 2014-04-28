@@ -8,7 +8,7 @@ import java.util.Random;
 import java.util.Set;
 
 /**
- * 
+ * Represent 3D world model for use by a simulation.
  * @author Patrick Mackinder
  */
 public class World
@@ -18,6 +18,12 @@ public class World
 	private final Cell[][][] cells;
 	private final List<Robot> robots = new ArrayList<Robot>();
 
+	/**
+	 * Generates a new world given maximum coordinates. World is generated from (0,0,0) to worldEnd
+	 * Adds a piece of coral to midpoint of world floor thus a world will always have one piece of coral
+	 * @param end
+	 * @throws IllegalArgumentException
+	 */
 	public World(Location end) throws IllegalArgumentException
 	{
 		if(end.getX() < 2 || end.getY() < 2 || end.getZ() < 2)
@@ -70,12 +76,23 @@ public class World
 		return cells[location.getX()][location.getY()][location.getZ()];
 	}
 
+	/**
+	 * Update cell with content at specified location
+	 * @param location
+	 * @param content
+	 * @throws ArrayIndexOutOfBoundsException
+	 * @throws CellNotEmptyException
+	 */
 	public void updateCell(Location location, CellContent content) throws ArrayIndexOutOfBoundsException, CellNotEmptyException
 	{
 		Cell cell = getCell(location);
 		cell.setContents(content);
 	}
 
+	/**
+	 * Insert robots into the world
+	 * @param bots
+	 */
 	public void insertRobots(List<Robot> bots)
 	{
 		for(Robot robot : bots)
@@ -93,6 +110,9 @@ public class World
 		}
 	}
 
+	/**
+	 * Update robots, called once per simulation cycle
+	 */
 	public void updateRobots()
 	{
 		// Will do nothing if not used insertRobots
@@ -102,6 +122,12 @@ public class World
 		}
 	}
 
+	/**
+	 * Get nine immdediate cells below another cell 
+	 * @param location
+	 * @return
+	 * @throws ArrayIndexOutOfBoundsException
+	 */
 	public Cell[][] getNeighboursBelow(Location location) throws ArrayIndexOutOfBoundsException
 	{
 		if(location.getZ() < 0)
@@ -139,8 +165,8 @@ public class World
 	}
 
 	/**
-	 * Insert number of coral blocks into simulation.
-	 * 
+	 * Insert number of coral blocks into simulation. Since world is generated with one coral block the
+	 * number of coral blocks inserted into world is numCorals - 1
 	 * @param numCorals
 	 * @throws IllegalArgumentException
 	 */
@@ -189,6 +215,12 @@ public class World
 		attachSurroundingCoralToReef(initialReefLocation, true);
 	}
 	
+	/**
+	 * Attach all contigous coral to reef, given starting location. If this called before simulation has executed
+	 * the second cycle, isInitialReef should be set to true, otherwise false.
+	 * @param location
+	 * @param isInititalReef
+	 */
 	public void attachSurroundingCoralToReef(Location location, boolean isInititalReef)
 	{
 		Set<Cell> reef = new HashSet<Cell>();
@@ -252,6 +284,13 @@ public class World
 		return neighbours;
 	}
 	
+	/**
+	 * Return colum of cells given (x,y) coordinates. Returns all cells with equal x and y values
+	 * @param x
+	 * @param y
+	 * @return
+	 * @throws ArrayIndexOutOfBoundsException
+	 */
 	public Cell[] getColumn(int x, int y) throws ArrayIndexOutOfBoundsException
 	{	
 		int endZ = end.getZ()+1;
@@ -274,6 +313,10 @@ public class World
 		getCell(location).setReef(true);
 	}
 
+	/**
+	 * Return reef rating as percentage of reef cells / number of coral cells
+	 * @return
+	 */
 	public float getRating()
 	{
 		int numReef = 0;

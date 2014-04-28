@@ -11,7 +11,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * Creates robots at random locations
  * @author Patrick Mackinder
  */
 public class RandomLocationRobotFactory implements RobotFactory

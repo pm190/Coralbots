@@ -13,11 +13,15 @@ import uk.ac.hw.pm190.coralbots.simulation.Location;
 import uk.ac.hw.pm190.coralbots.simulation.Simulation;
 
 /**
- * 
+ * Simulation test
  * @author Patrick Mackinder
  */
 public class SimulationTest
 {
+	/**
+	 * Test to see if robot moved
+	 * @throws CellNotEmptyException
+	 */
 	@Test
 	public void robotMoved_succeeds() throws CellNotEmptyException
 	{

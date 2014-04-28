@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Represents a 2D coordinate of (x,y)
  * @author Patrick Mackinder
  */
 public class XYPair

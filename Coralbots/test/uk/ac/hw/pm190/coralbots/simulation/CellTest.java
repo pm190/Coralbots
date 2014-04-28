@@ -16,7 +16,7 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 /**
- * 
+ * Test class for Cell class
  * @author Patrick Mackinder
  */
 @RunWith(DataProviderRunner.class)
@@ -31,6 +31,11 @@ public class CellTest
 		return data.toArray(new Object[][] {});
 	}
 
+	/**
+	 * Test CellNotEmptyException being thrown in appropriate situation
+	 * @param content
+	 * @throws CellNotEmptyException
+	 */
 	@Test(expected = CellNotEmptyException.class)
 	@UseDataProvider("notEmptyCellContents")
 	public void setContentsOfNotEmptyCell_throwsEsception_succeeds(CellContent content) throws CellNotEmptyException
@@ -40,6 +45,11 @@ public class CellTest
 		c.setContents(content);
 	}
 
+	/**
+	 * Test that CellNotEmptyException is not thrown when valid call is made
+	 * @param content
+	 * @throws CellNotEmptyException
+	 */
 	@Test
 	@UseDataProvider("notEmptyCellContents")
 	public void setContentsOfEmptyCell_noExcpetion_succeeds(CellContent content) throws CellNotEmptyException

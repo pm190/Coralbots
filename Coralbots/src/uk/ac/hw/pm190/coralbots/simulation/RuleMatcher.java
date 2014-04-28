@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Resposible for matching a rule to a given location in the world
  * @author Patrick Mackinder
  */
 public class RuleMatcher

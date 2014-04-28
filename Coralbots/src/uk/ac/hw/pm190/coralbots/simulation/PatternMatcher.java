@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Pattern matcher is responsible for matching a pattern to given location in the world
  * @author Patrick Mackinder
  */
 public class PatternMatcher
@@ -9,6 +9,14 @@ public class PatternMatcher
 	private final boolean patternMatched;
 	private final boolean partOfReef;
 
+	/**
+	 * Attempts to match pattern to world location, if so sets patternMatched true and partOfReef true
+	 * if pattern matched is part of central coral reef
+	 * @param world
+	 * @param location
+	 * @param pattern
+	 * @param rotation
+	 */
 	public PatternMatcher(World world, Location location, Pattern pattern, Rotation rotation) 
 	{
 		boolean matched = true;

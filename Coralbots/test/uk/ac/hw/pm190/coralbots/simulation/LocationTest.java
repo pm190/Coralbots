@@ -15,12 +15,16 @@ import com.tngtech.java.junit.dataprovider.DataProviderRunner;
 import com.tngtech.java.junit.dataprovider.UseDataProvider;
 
 /**
- * 
+ * Test cases for Location class
  * @author Patrick Mackinder
  */
 @RunWith(DataProviderRunner.class)
 public class LocationTest
 {
+	/**
+	 * generate array of valid neighbours
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] validNeighbours()
 	{
@@ -42,6 +46,10 @@ public class LocationTest
 		return data.toArray(new Object[][] {});
 	}
 	
+	/**
+	 * generate array of invalid neighbours
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] invalidNeighbours()
 	{
@@ -67,6 +75,10 @@ public class LocationTest
 		return data.toArray(new Object[][] {});
 	}
 	
+	/**
+	 * generate array of locations, and the location in the middle of the two
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] middleLocations()
 	{
@@ -87,6 +99,10 @@ public class LocationTest
 		return data.toArray(new Object[][] {});
 	}
 	
+	/**
+	 * generate array of location and locations at specified distances
+	 * @return
+	 */
 	@DataProvider
 	public static Object[][] locationsAndDistances()
 	{

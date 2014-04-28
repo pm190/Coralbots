@@ -9,7 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 /**
- * 
+ * Represents one simulation.
  * @author Patrick Mackinder
  */
 public class Simulation
@@ -17,6 +17,15 @@ public class Simulation
 	private final World world;
 	private final int cycles;
 	
+	/**
+	 * Creates simulation given specified parameters, but does not run until run method is called.
+	 * @param end
+	 * @param numberOfRobots
+	 * @param robotFactory
+	 * @param rules
+	 * @param cycles
+	 * @param corals
+	 */
 	public Simulation(Location end, int numberOfRobots, RobotFactory robotFactory, File rules, int cycles, int corals)
 	{
 		world = new World(end);
@@ -45,6 +54,9 @@ public class Simulation
 		}
 	}
 	
+	/**
+	 * Runs the simulation
+	 */
 	public void run()
 	{
 		for(int i = 0; i < cycles; i++)

@@ -1,7 +1,7 @@
 package uk.ac.hw.pm190.coralbots.simulation;
 
 /**
- * 
+ * Rotaion enumerations, handles 2D coordinate transformations for each rotation
  * @author Patrick Mackinder
  */
 public enum Rotation

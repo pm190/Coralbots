@@ -3,7 +3,7 @@ package uk.ac.hw.pm190.coralbots.simulation;
 import java.util.Collection;
 
 /**
- * 
+ * A robot is a coralbot, it can move around the world and pickup and place coral in the reef
  * @author Patrick Mackinder
  */
 public class Robot implements CellContent
@@ -12,6 +12,11 @@ public class Robot implements CellContent
 	private CellContent contents;
 	private final Collection<Rule> rules;
 
+	/**
+	 * Create robot at location with given rule set
+	 * @param location
+	 * @param rules
+	 */
 	public Robot(Location location, Collection<Rule> rules)
 	{
 		this.location = location;
@@ -24,6 +29,12 @@ public class Robot implements CellContent
 		return location;
 	}
 	
+	/**
+	 * Robot first moves if possible. Then if carrying an element will attempt to match one of its rules and place
+	 * the element into the world. If not carrying an element it attempts to pickup an element if one is available.
+	 * @param world
+	 * @throws ArrayIndexOutOfBoundsException
+	 */
 	public void update(World world) throws ArrayIndexOutOfBoundsException
 	{
 		//MOVE
